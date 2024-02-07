@@ -44,7 +44,7 @@ class RyeClient implements IRyeClient {
   getCart = async (
     getCartParams: GetCartParams
   ): Promise<GetCartQuery['getCart'] | undefined> => {
-    const response = await this.apiRequest(GET_CART_QUERY, getCartParams)
+    const response = await this.apiRequest(GET_CART_QUERY, getCartParams);
     return response?.data?.getCart
   }
 
