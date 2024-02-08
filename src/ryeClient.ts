@@ -21,6 +21,8 @@ import { DELETE_CART_ITEMS_MUTATION } from "./gql/deleteCartItems";
 import { ENVIRONMENT_TOKEN_QUERY } from "./gql/environmentToken";
 import { GET_CART_QUERY } from "./gql/getCart";
 import { ORDER_BY_ID_QUERY } from "./gql/orderById";
+import { PRODUCT_BY_ID_QUERY } from "./gql/productById";
+import { PRODUCTS_BY_DOMAIN_V2_QUERY } from "./gql/productsByDomainV2";
 import { REMOVE_CART_MUTATION } from "./gql/removeCart";
 import { REQUEST_PRODUCT_BY_URL_MUTATION } from "./gql/requestProductByURL";
 import { REQUEST_STORE_BY_URL_MUTATION } from "./gql/requestStoreByURL";
@@ -37,6 +39,8 @@ import {
   EnvironmentTokenQuery,
   GetCartQuery,
   OrderByIdQuery,
+  ProductByIdQuery,
+  ProductsByDomainV2Query,
   RemoveCartMutation,
   RequestProductByUrlMutation,
   RequestStoreByUrlMutation,
@@ -53,6 +57,8 @@ import {
   DeleteCartItemsParams,
   GetCartParams,
   OrderByIdParams,
+  ProductByIdParams,
+  ProductsByDomainV2Params,
   RemoveCartParams,
   RequestProductByUrlParams,
   RequestStoreByUrlParams,
@@ -390,6 +396,38 @@ class RyeClient implements IRyeClient {
     );
 
     return response.data?.requestStoreByURL;
+  };
+
+  /**
+   * Fetch product information via Product ID.
+   * @param productByIdParams - The params for the productById query.
+   * @returns A promise that resolves to the product data or undefined.
+   */
+  getProductById = async (
+    productByIdParams: ProductByIdParams,
+  ): Promise<ProductByIdQuery["productByID"] | undefined> => {
+    const response = await this.apiRequest(
+      PRODUCT_BY_ID_QUERY,
+      productByIdParams,
+    );
+
+    return response.data?.productByID;
+  };
+
+  /**
+   * Fetch all products information via domain.
+   * @param productsByDomainV2Params - The params for the productsByDomainV2 query.
+   * @returns A promise that resolves to the array of products or undefined.
+   */
+  getProductsByDomainV2 = async (
+    productsByDomainV2Params: ProductsByDomainV2Params,
+  ): Promise<ProductsByDomainV2Query["productsByDomainV2"] | undefined> => {
+    const response = await this.apiRequest(
+      PRODUCTS_BY_DOMAIN_V2_QUERY,
+      productsByDomainV2Params,
+    );
+
+    return response.data?.productsByDomainV2;
   };
 }
 

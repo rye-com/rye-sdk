@@ -6,6 +6,9 @@ import {
   CartItemsDeleteInput,
   CartItemsUpdateInput,
   CartSubmitInput,
+  OffsetPaginationInput,
+  ProductByIdInput,
+  ProductsByDomainInput,
   RequestProductByUrlInput,
   RequestStoreByUrlInput,
   UpdateCartSelectedShippingOptionsInput,
@@ -97,4 +100,15 @@ export type RequestProductByUrlParams = {
 
 export type RequestStoreByUrlParams = {
   input: RequestStoreByUrlInput;
+};
+
+export type ProductByIdParams = {
+  input: ProductByIdInput;
+  includeAdditionalProductDetails: boolean;
+};
+
+export type ProductsByDomainV2Params = {
+  input: ProductsByDomainInput;
+  pagination: OffsetPaginationInput;
+  includeAdditionalProductDetails: boolean;
 };

@@ -211,3 +211,72 @@ export const Cart = graphql(`
     }
   }
 `);
+
+export const ProductDetails = graphql(`
+  fragment ProductDetails on Product {
+    id
+    marketplace
+    title
+    description
+    vendor
+    url
+    isAvailable
+    tags
+    images {
+      url
+    }
+    price {
+      value
+      currency
+      displayValue
+    }
+  }
+`);
+
+export const AdditionalProductDetails = graphql(`
+  fragment AdditionalProductDetails on Product {
+    ... on AmazonProduct {
+      ASIN
+      titleExcludingVariantName
+      categories {
+        name
+        url
+      }
+      featureBullets
+      ratingsTotal
+      reviewsTotal
+      variants {
+        title
+        image {
+          url
+          ... on AmazonImage {
+            position
+            width
+            height
+          }
+        }
+      }
+      specifications {
+        name
+        value
+      }
+      color
+      manufacturer
+      weight
+      firstAvailable
+      dimensions
+      modelNumber
+    }
+    ... on ShopifyProduct {
+      descriptionHTML
+      collectionHandle
+      handle
+      maxPrice
+      minPrice
+      productType
+      createdAt
+      publishedAt
+      storeCanonicalURL
+    }
+  }
+`);
