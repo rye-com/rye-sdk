@@ -163,3 +163,51 @@ export const ShopifyCartLines = graphql(`
     }
   }
 `);
+
+export const Cart = graphql(`
+  fragment Cart on CartResponse {
+    cart {
+      id
+      ...BuyerIdentity @include(if: $fetchBuyerIdentity)
+      stores {
+        ... on AmazonStore {
+          isSubmitted
+          requestId
+          errors {
+            code
+            message
+            details {
+              productIds
+            }
+          }
+          store
+          ...AmazonCartLines @include(if: $fetchCartLines)
+          isShippingRequired
+          ...AmazonOffer @include(if: $fetchOffer)
+          offer {
+            ...AmazonShippingMethods @include(if: $fetchShippingMethods)
+          }
+        }
+        ... on ShopifyStore {
+          errors {
+            code
+            message
+            details {
+              variantIds
+            }
+          }
+          store
+          ...ShopifyCartLines @include(if: $fetchCartLines)
+          ...ShopifyOffer @include(if: $fetchOffer)
+          offer {
+            ...ShopifyShippingMethods @include(if: $fetchShippingMethods)
+          }
+        }
+      }
+    }
+    errors {
+      code
+      message
+    }
+  }
+`);
