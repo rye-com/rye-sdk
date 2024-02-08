@@ -1,4 +1,4 @@
-import { graphql } from '../graphql'
+import { graphql } from "../graphql";
 
 export const BuyerIdentity = graphql(`
   fragment BuyerIdentity on Cart {
@@ -15,7 +15,7 @@ export const BuyerIdentity = graphql(`
       phone
     }
   }
-`)
+`);
 
 export const AmazonShippingMethods = graphql(`
   fragment AmazonShippingMethods on AmazonOffer {
@@ -39,7 +39,7 @@ export const AmazonShippingMethods = graphql(`
       }
     }
   }
-`)
+`);
 
 export const ShopifyShippingMethods = graphql(`
   fragment ShopifyShippingMethods on ShopifyOffer {
@@ -63,7 +63,7 @@ export const ShopifyShippingMethods = graphql(`
       }
     }
   }
-`)
+`);
 
 export const AmazonOffer = graphql(`
   fragment AmazonOffer on AmazonStore {
@@ -91,7 +91,7 @@ export const AmazonOffer = graphql(`
       ...AmazonShippingMethods
     }
   }
-`)
+`);
 
 export const ShopifyOffer = graphql(`
   fragment ShopifyOffer on ShopifyStore {
@@ -119,7 +119,7 @@ export const ShopifyOffer = graphql(`
       ...ShopifyShippingMethods
     }
   }
-`)
+`);
 
 export const AmazonCartLines = graphql(`
   fragment AmazonCartLines on AmazonStore {
@@ -143,7 +143,7 @@ export const AmazonCartLines = graphql(`
       }
     }
   }
-`)
+`);
 
 export const ShopifyCartLines = graphql(`
   fragment ShopifyCartLines on ShopifyStore {
@@ -162,4 +162,4 @@ export const ShopifyCartLines = graphql(`
       }
     }
   }
-`)
+`);

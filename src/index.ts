@@ -1,1 +1,1 @@
-export { RyeClient } from './ryeClient'
+export { RyeClient } from "./ryeClient";

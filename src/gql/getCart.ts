@@ -1,4 +1,4 @@
-import { graphql } from '../graphql'
+import { graphql } from "../graphql";
 
 export const GET_CART_QUERY = graphql(`
   query GetCart(
@@ -54,4 +54,4 @@ export const GET_CART_QUERY = graphql(`
       }
     }
   }
-`)
+`);

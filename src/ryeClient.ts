@@ -6,46 +6,39 @@ import {
   fetchExchange,
   OperationResult,
   OperationResultSource,
-} from 'urql'
+} from "urql";
 
-import { ENVIRONMENT, GRAPHQL_ENDPOINTS, RYE_SHOPPER_IP } from './constants'
-import { GET_CART_QUERY } from './gql/getCart'
-import { GetCartQuery } from './graphql/graphql'
-import { GetCartParams, Operation } from './types'
+import {
+  ENVIRONMENT,
+  GRAPHQL_ENDPOINTS,
+  OPERATION,
+  RYE_SHOPPER_IP,
+} from "./constants";
+import { GET_CART_QUERY } from "./gql/getCart";
+import { GetCartQuery } from "./graphql/graphql";
+import { GetCartParams } from "./types";
 
 interface IRyeClient {
   getCart(
-    getCartParams: GetCartParams
-  ): Promise<GetCartQuery['getCart'] | undefined>
+    getCartParams: GetCartParams,
+  ): Promise<GetCartQuery["getCart"] | undefined>;
 }
 
 class RyeClient implements IRyeClient {
-  private authHeader: string | null
-  private shopperIp: string | null
-  private environment: ENVIRONMENT
-  private ryeClient: Client
+  private authHeader: string | null;
+  private shopperIp: string | null;
+  private environment: ENVIRONMENT;
+  private ryeClient: Client;
 
   constructor(
     authHeader: string,
     shopperIp: string,
-    environment?: ENVIRONMENT
+    environment = ENVIRONMENT.PRODUCTION,
   ) {
-    this.authHeader = authHeader
-    this.shopperIp = shopperIp
-    this.environment = environment || ENVIRONMENT.PRODUCTION
-    this.ryeClient = this.initializeClient()
-  }
-
-  /**
-   * Fetches cart details.
-   * @param getCartParams - The params for the getCart query.
-   * @returns A promise that resolves to the cart data or undefined.
-   */
-  getCart = async (
-    getCartParams: GetCartParams
-  ): Promise<GetCartQuery['getCart'] | undefined> => {
-    const response = await this.apiRequest(GET_CART_QUERY, getCartParams);
-    return response?.data?.getCart
+    this.authHeader = authHeader;
+    this.shopperIp = shopperIp;
+    this.environment = environment;
+    this.ryeClient = this.initializeClient();
   }
 
   /**
@@ -55,8 +48,8 @@ class RyeClient implements IRyeClient {
   private initializeClient() {
     if (!this.authHeader || !this.shopperIp) {
       throw new Error(
-        'RyeClient requires an authHeader and shopperIp to be set.'
-      )
+        "RyeClient requires an authHeader and shopperIp to be set.",
+      );
     }
     return new Client({
       url: GRAPHQL_ENDPOINTS[this.environment],
@@ -67,13 +60,13 @@ class RyeClient implements IRyeClient {
             Authorization: this.authHeader!,
             [RYE_SHOPPER_IP]: this.shopperIp!,
           },
-        }
+        };
       },
-    })
+    });
   }
 
   /**
-   * Make an API request to retrieve the cart data.
+   * Make an API request.
    * @param query
    * @param variables - The variables to include in the API request.
    * @param method - either query or mutation.
@@ -82,19 +75,36 @@ class RyeClient implements IRyeClient {
   private async apiRequest<TResult, TVariables extends AnyVariables>(
     query: DocumentInput<TResult, TVariables>,
     variables: TVariables,
-    method: Operation = Operation.Query
+    method: OPERATION = OPERATION.QUERY,
   ): Promise<OperationResultSource<OperationResult<TResult, TVariables>>> {
     const tryRequest = async () => {
-      return await this.ryeClient[method](query, variables)
-    }
+      return await this.ryeClient[method](query, variables);
+    };
 
     try {
-      return await tryRequest()
+      return await tryRequest();
     } catch (e) {
-      console.error('Error requesting Rye API.', e)
-      throw e
+      console.error("Error requesting Rye API. ", {
+        query,
+        variables,
+        method,
+        error: e,
+      });
+      throw e;
     }
   }
+
+  /**
+   * Fetches cart details.
+   * @param getCartParams - The params for the getCart query.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  getCart = async (
+    getCartParams: GetCartParams,
+  ): Promise<GetCartQuery["getCart"] | undefined> => {
+    const response = await this.apiRequest(GET_CART_QUERY, getCartParams);
+    return response?.data?.getCart;
+  };
 }
 
-export { RyeClient }
+export { RyeClient };
