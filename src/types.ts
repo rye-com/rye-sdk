@@ -6,6 +6,8 @@ import {
   CartItemsDeleteInput,
   CartItemsUpdateInput,
   CartSubmitInput,
+  RequestProductByUrlInput,
+  RequestStoreByUrlInput,
   UpdateCartSelectedShippingOptionsInput,
 } from "./graphql/graphql";
 
@@ -71,4 +73,28 @@ export type UpdateCartSelectedShippingOptionsParams = {
 
 export type SubmitCartParams = {
   input: CartSubmitInput;
+};
+
+export type OrderByIdParams = {
+  id: string;
+};
+
+export type CheckoutByCartIdParams = {
+  cartID: string;
+  fetchBuyerIdentity?: boolean;
+  fetchShippingMethods?: boolean;
+  fetchOffer?: boolean;
+  fetchCartLines?: boolean;
+};
+
+export type ShopifyAppParams = {
+  storeCanonicalDomain: string;
+};
+
+export type RequestProductByUrlParams = {
+  input: RequestProductByUrlInput;
+};
+
+export type RequestStoreByUrlParams = {
+  input: RequestStoreByUrlInput;
 };
