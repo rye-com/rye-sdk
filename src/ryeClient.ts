@@ -14,14 +14,19 @@ import {
   OPERATION,
   RYE_SHOPPER_IP,
 } from "./constants";
+import { CREATE_CART_MUTATION } from "./gql/createCart";
 import { GET_CART_QUERY } from "./gql/getCart";
-import { GetCartQuery } from "./graphql/graphql";
-import { GetCartParams } from "./types";
+import { CreateCartMutation, GetCartQuery } from "./graphql/graphql";
+import { CreateCartParams, GetCartParams } from "./types";
 
 interface IRyeClient {
   getCart(
     getCartParams: GetCartParams,
   ): Promise<GetCartQuery["getCart"] | undefined>;
+
+  createCart(
+    createCartParams: CreateCartParams,
+  ): Promise<CreateCartMutation["createCart"] | undefined>;
 }
 
 class RyeClient implements IRyeClient {
@@ -104,6 +109,22 @@ class RyeClient implements IRyeClient {
   ): Promise<GetCartQuery["getCart"] | undefined> => {
     const response = await this.apiRequest(GET_CART_QUERY, getCartParams);
     return response?.data?.getCart;
+  };
+
+  /**
+   * Creates a cart.
+   * @param createCartParams - The params for the createCart mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  createCart = async (
+    createCartParams: CreateCartParams,
+  ): Promise<CreateCartMutation["createCart"] | undefined> => {
+    const response = await this.apiRequest(
+      CREATE_CART_MUTATION,
+      createCartParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.createCart;
   };
 }
 
