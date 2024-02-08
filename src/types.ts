@@ -1,4 +1,13 @@
-import { CartCreateInput } from "./graphql/graphql";
+import {
+  CartBuyerIdentityUpdateInput,
+  CartCreateInput,
+  CartDeleteInput,
+  CartItemsAddInput,
+  CartItemsDeleteInput,
+  CartItemsUpdateInput,
+  CartSubmitInput,
+  UpdateCartSelectedShippingOptionsInput,
+} from "./graphql/graphql";
 
 export type GetCartParams = {
   id: string;
@@ -14,4 +23,52 @@ export type CreateCartParams = {
   fetchShippingMethods?: boolean;
   fetchOffer?: boolean;
   fetchCartLines?: boolean;
+};
+
+export type AddCartItemsParams = {
+  input: CartItemsAddInput;
+  fetchBuyerIdentity?: boolean;
+  fetchShippingMethods?: boolean;
+  fetchOffer?: boolean;
+  fetchCartLines?: boolean;
+};
+
+export type DeleteCartItemsParams = {
+  input: CartItemsDeleteInput;
+  fetchBuyerIdentity?: boolean;
+  fetchShippingMethods?: boolean;
+  fetchOffer?: boolean;
+  fetchCartLines?: boolean;
+};
+
+export type UpdateCartItemsParams = {
+  input: CartItemsUpdateInput;
+  fetchBuyerIdentity?: boolean;
+  fetchShippingMethods?: boolean;
+  fetchOffer?: boolean;
+  fetchCartLines?: boolean;
+};
+
+export type RemoveCartParams = {
+  input: CartDeleteInput;
+};
+
+export type UpdateCartBuyerIdentityParams = {
+  input: CartBuyerIdentityUpdateInput;
+  fetchBuyerIdentity?: boolean;
+  fetchShippingMethods?: boolean;
+  fetchOffer?: boolean;
+  fetchCartLines?: boolean;
+};
+
+export type UpdateCartSelectedShippingOptionsParams = {
+  input: UpdateCartSelectedShippingOptionsInput;
+  fetchBuyerIdentity?: boolean;
+  fetchShippingMethods?: boolean;
+  fetchOffer?: boolean;
+  fetchCartLines?: boolean;
+};
+
+export type SubmitCartParams = {
+  input: CartSubmitInput;
 };
