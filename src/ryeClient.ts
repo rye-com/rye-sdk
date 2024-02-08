@@ -15,20 +15,32 @@ import {
   RYE_SHOPPER_IP,
 } from "./constants";
 import { ADD_CART_ITEMS_MUTATION } from "./gql/addCartItems";
+import { CHECKOUT_BY_CART_ID_QUERY } from "./gql/checkoutByCartId";
 import { CREATE_CART_MUTATION } from "./gql/createCart";
 import { DELETE_CART_ITEMS_MUTATION } from "./gql/deleteCartItems";
+import { ENVIRONMENT_TOKEN_QUERY } from "./gql/environmentToken";
 import { GET_CART_QUERY } from "./gql/getCart";
+import { ORDER_BY_ID_QUERY } from "./gql/orderById";
 import { REMOVE_CART_MUTATION } from "./gql/removeCart";
+import { REQUEST_PRODUCT_BY_URL_MUTATION } from "./gql/requestProductByURL";
+import { REQUEST_STORE_BY_URL_MUTATION } from "./gql/requestStoreByURL";
+import { SHOPIFY_APP_QUERY } from "./gql/shopifyApp";
 import { SUBMIT_CART_MUTATION } from "./gql/submitCart";
 import { UPDATE_CART_BUYER_IDENTITY_MUTATION } from "./gql/updateCartBuyerIdentity";
 import { UPDATE_CART_ITEMS_MUTATION } from "./gql/updateCartItems";
 import { UPDATE_CART_SELECTED_SHIPPING_OPTIONS_MUTATION } from "./gql/updateCartSelectedShippingOptions";
 import {
   AddCartItemsMutation,
+  CheckoutByCartIdQuery,
   CreateCartMutation,
   DeleteCartItemsMutation,
+  EnvironmentTokenQuery,
   GetCartQuery,
+  OrderByIdQuery,
   RemoveCartMutation,
+  RequestProductByUrlMutation,
+  RequestStoreByUrlMutation,
+  ShopifyAppQuery,
   SubmitCartMutation,
   UpdateCartBuyerIdentityMutation,
   UpdateCartItemsMutation,
@@ -36,10 +48,15 @@ import {
 } from "./graphql/graphql";
 import {
   AddCartItemsParams,
+  CheckoutByCartIdParams,
   CreateCartParams,
   DeleteCartItemsParams,
   GetCartParams,
+  OrderByIdParams,
   RemoveCartParams,
+  RequestProductByUrlParams,
+  RequestStoreByUrlParams,
+  ShopifyAppParams,
   SubmitCartParams,
   UpdateCartBuyerIdentityParams,
   UpdateCartItemsParams,
@@ -285,6 +302,94 @@ class RyeClient implements IRyeClient {
       OPERATION.MUTATION,
     );
     return response.data?.submitCart;
+  };
+
+  /**
+   * Get order by ID.
+   * @param orderByIdParams - The params for the orderById query.
+   * @returns A promise that resolves to the order data or undefined.
+   */
+  orderById = async (
+    orderByIdParams: OrderByIdParams,
+  ): Promise<OrderByIdQuery["orderByID"] | undefined> => {
+    const response = await this.apiRequest(ORDER_BY_ID_QUERY, orderByIdParams);
+    return response?.data?.orderByID;
+  };
+
+  /**
+   * Get checkout details of cart by ID.
+   * @param checkoutByCartIdParams - The params for the checkoutByCartId query.
+   * @returns A promise that resolves to the checked out cart data or undefined.
+   */
+  checkoutByCartId = async (
+    checkoutByCartIdParams: CheckoutByCartIdParams,
+  ): Promise<CheckoutByCartIdQuery["checkoutByCartID"] | undefined> => {
+    const response = await this.apiRequest(
+      CHECKOUT_BY_CART_ID_QUERY,
+      checkoutByCartIdParams,
+    );
+    return response?.data?.checkoutByCartID;
+  };
+
+  /**
+   * Get Rye Pay env token.
+   * @returns A promise that resolves to the env token or undefined.
+   */
+  getEnvironmentToken = async (): Promise<
+    EnvironmentTokenQuery["environmentToken"] | undefined
+  > => {
+    const response = await this.apiRequest(ENVIRONMENT_TOKEN_QUERY, {});
+
+    return response.data?.environmentToken;
+  };
+
+  /**
+   * Get ShopifyApp information.
+   * @param shopifyAppParams - The params for the shopifyApp query.
+   * @returns A promise that resolves to the Shopify app details or undefined.
+   */
+  getShopifyAppInformation = async (
+    shopifyAppParams: ShopifyAppParams,
+  ): Promise<ShopifyAppQuery["shopifyApp"] | undefined> => {
+    const response = await this.apiRequest(SHOPIFY_APP_QUERY, shopifyAppParams);
+
+    return response.data?.shopifyApp;
+  };
+
+  /**
+   * Request product by URL to be tracked by Rye.
+   * @param requestProductByUrlParams - The params for the requestProductByUrl query.
+   * @returns A promise that resolves to the product ID or undefined.
+   */
+  requestProductByUrl = async (
+    requestProductByUrlParams: RequestProductByUrlParams,
+  ): Promise<
+    RequestProductByUrlMutation["requestProductByURL"] | undefined
+  > => {
+    const response = await this.apiRequest(
+      REQUEST_PRODUCT_BY_URL_MUTATION,
+      requestProductByUrlParams,
+      OPERATION.MUTATION,
+    );
+
+    return response.data?.requestProductByURL;
+  };
+
+  /**
+   * Request a store by URL to be tracked by Rye.
+   * @param requestStoreByUrlParams - The params for the requestStoreByUrl query.
+   * @returns A promise that resolves to the request ID or undefined.
+   */
+  requestStoreByUrl = async (
+    requestStoreByUrlParams: RequestStoreByUrlParams,
+  ): Promise<RequestStoreByUrlMutation["requestStoreByURL"] | undefined> => {
+    const response = await this.apiRequest(
+      REQUEST_STORE_BY_URL_MUTATION,
+      requestStoreByUrlParams,
+      OPERATION.MUTATION,
+    );
+
+    return response.data?.requestStoreByURL;
   };
 }
 
