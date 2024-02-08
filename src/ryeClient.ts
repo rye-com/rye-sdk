@@ -14,10 +14,37 @@ import {
   OPERATION,
   RYE_SHOPPER_IP,
 } from "./constants";
+import { ADD_CART_ITEMS_MUTATION } from "./gql/addCartItems";
 import { CREATE_CART_MUTATION } from "./gql/createCart";
+import { DELETE_CART_ITEMS_MUTATION } from "./gql/deleteCartItems";
 import { GET_CART_QUERY } from "./gql/getCart";
-import { CreateCartMutation, GetCartQuery } from "./graphql/graphql";
-import { CreateCartParams, GetCartParams } from "./types";
+import { REMOVE_CART_MUTATION } from "./gql/removeCart";
+import { SUBMIT_CART_MUTATION } from "./gql/submitCart";
+import { UPDATE_CART_BUYER_IDENTITY_MUTATION } from "./gql/updateCartBuyerIdentity";
+import { UPDATE_CART_ITEMS_MUTATION } from "./gql/updateCartItems";
+import { UPDATE_CART_SELECTED_SHIPPING_OPTIONS_MUTATION } from "./gql/updateCartSelectedShippingOptions";
+import {
+  AddCartItemsMutation,
+  CreateCartMutation,
+  DeleteCartItemsMutation,
+  GetCartQuery,
+  RemoveCartMutation,
+  SubmitCartMutation,
+  UpdateCartBuyerIdentityMutation,
+  UpdateCartItemsMutation,
+  UpdateCartSelectedShippingOptionsMutation,
+} from "./graphql/graphql";
+import {
+  AddCartItemsParams,
+  CreateCartParams,
+  DeleteCartItemsParams,
+  GetCartParams,
+  RemoveCartParams,
+  SubmitCartParams,
+  UpdateCartBuyerIdentityParams,
+  UpdateCartItemsParams,
+  UpdateCartSelectedShippingOptionsParams,
+} from "./types";
 
 interface IRyeClient {
   getCart(
@@ -27,6 +54,22 @@ interface IRyeClient {
   createCart(
     createCartParams: CreateCartParams,
   ): Promise<CreateCartMutation["createCart"] | undefined>;
+
+  addCartItems(
+    addCartItemsParams: AddCartItemsParams,
+  ): Promise<AddCartItemsMutation["addCartItems"] | undefined>;
+
+  deleteCartItems(
+    deleteCartItemsParams: DeleteCartItemsParams,
+  ): Promise<DeleteCartItemsMutation["deleteCartItems"] | undefined>;
+
+  updateCartItems(
+    updateCartItemsParams: UpdateCartItemsParams,
+  ): Promise<UpdateCartItemsMutation["updateCartItems"] | undefined>;
+
+  removeCart(
+    removeCartItemsParams: RemoveCartParams,
+  ): Promise<RemoveCartMutation["removeCart"] | undefined>;
 }
 
 class RyeClient implements IRyeClient {
@@ -125,6 +168,123 @@ class RyeClient implements IRyeClient {
       OPERATION.MUTATION,
     );
     return response.data?.createCart;
+  };
+
+  /**
+   * Add items to your cart.
+   * @param addCartItemsParams - The params for the addCartItems mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  addCartItems = async (
+    addCartItemsParams: AddCartItemsParams,
+  ): Promise<AddCartItemsMutation["addCartItems"] | undefined> => {
+    const response = await this.apiRequest(
+      ADD_CART_ITEMS_MUTATION,
+      addCartItemsParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.addCartItems;
+  };
+
+  /**
+   * Delete items from your cart.
+   * @param deleteCartItemsParams - The params for the deleteCartItems mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  deleteCartItems = async (
+    deleteCartItemsParams: DeleteCartItemsParams,
+  ): Promise<DeleteCartItemsMutation["deleteCartItems"] | undefined> => {
+    const response = await this.apiRequest(
+      DELETE_CART_ITEMS_MUTATION,
+      deleteCartItemsParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.deleteCartItems;
+  };
+
+  /**
+   * Update item quantities for your cart.
+   * @param updateCartItemsParams - The params for the updateCartItems mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  updateCartItems = async (
+    updateCartItemsParams: UpdateCartItemsParams,
+  ): Promise<UpdateCartItemsMutation["updateCartItems"] | undefined> => {
+    const response = await this.apiRequest(
+      UPDATE_CART_ITEMS_MUTATION,
+      updateCartItemsParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.updateCartItems;
+  };
+
+  /**
+   * Removes/Deletes the cart.
+   * @param removeCartItemsParams - The params for the removeCart mutation.
+   * @returns A promise that resolves to the cart ID or undefined.
+   */
+  removeCart = async (
+    removeCartItemsParams: RemoveCartParams,
+  ): Promise<RemoveCartMutation["removeCart"] | undefined> => {
+    const response = await this.apiRequest(
+      REMOVE_CART_MUTATION,
+      removeCartItemsParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.removeCart;
+  };
+
+  /**
+   * Update buyer identity for the cart.
+   * @param updateCartBuyerIdentityParams - The params for the updateCartBuyerIdentity mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  updateCartBuyerIdentity = async (
+    updateCartBuyerIdentityParams: UpdateCartBuyerIdentityParams,
+  ): Promise<
+    UpdateCartBuyerIdentityMutation["updateCartBuyerIdentity"] | undefined
+  > => {
+    const response = await this.apiRequest(
+      UPDATE_CART_BUYER_IDENTITY_MUTATION,
+      updateCartBuyerIdentityParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.updateCartBuyerIdentity;
+  };
+
+  /**
+   * Update shipping options for a cart.
+   * @param  updateCartSelectedShippingOptionsParams - The params for the updateCartSelectedShippingOptions mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  updateCartSelectedShippingOptions = async (
+    updateCartSelectedShippingOptionsParams: UpdateCartSelectedShippingOptionsParams,
+  ): Promise<
+    | UpdateCartSelectedShippingOptionsMutation["updateCartSelectedShippingOptions"]
+    | undefined
+  > => {
+    const response = await this.apiRequest(
+      UPDATE_CART_SELECTED_SHIPPING_OPTIONS_MUTATION,
+      updateCartSelectedShippingOptionsParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.updateCartSelectedShippingOptions;
+  };
+
+  /**
+   * Submit cart for checkout.
+   * @param submitCartParams - The params for the submitCart mutation.
+   * @returns A promise that resolves to the cart data or undefined.
+   */
+  submitCart = async (
+    submitCartParams: SubmitCartParams,
+  ): Promise<SubmitCartMutation["submitCart"] | undefined> => {
+    const response = await this.apiRequest(
+      SUBMIT_CART_MUTATION,
+      submitCartParams,
+      OPERATION.MUTATION,
+    );
+    return response.data?.submitCart;
   };
 }
 
