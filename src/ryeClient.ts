@@ -93,6 +93,53 @@ interface IRyeClient {
   removeCart(
     removeCartItemsParams: RemoveCartParams,
   ): Promise<RemoveCartMutation["removeCart"] | undefined>;
+
+  updateCartBuyerIdentity(
+    updateCartBuyerIdentityParams: UpdateCartBuyerIdentityParams,
+  ): Promise<
+    UpdateCartBuyerIdentityMutation["updateCartBuyerIdentity"] | undefined>;
+
+  updateCartSelectedShippingOptions(
+    updateCartSelectedShippingOptionsParams: UpdateCartSelectedShippingOptionsParams,
+  ): Promise<
+    | UpdateCartSelectedShippingOptionsMutation["updateCartSelectedShippingOptions"]
+    | undefined>;
+
+  submitCart(
+    submitCartParams: SubmitCartParams,
+  ): Promise<SubmitCartMutation["submitCart"] | undefined>;
+
+  orderById(
+    orderByIdParams: OrderByIdParams,
+  ): Promise<OrderByIdQuery["orderByID"] | undefined>;
+
+  checkoutByCartId(
+    checkoutByCartIdParams: CheckoutByCartIdParams,
+  ): Promise<CheckoutByCartIdQuery["checkoutByCartID"] | undefined>;
+
+  getEnvironmentToken(): Promise<
+    EnvironmentTokenQuery["environmentToken"] | undefined>;
+
+  getShopifyAppInformation(
+    shopifyAppParams: ShopifyAppParams,
+  ): Promise<ShopifyAppQuery["shopifyApp"] | undefined>;
+
+  requestProductByUrl(
+    requestProductByUrlParams: RequestProductByUrlParams,
+  ): Promise<
+    RequestProductByUrlMutation["requestProductByURL"] | undefined>;
+
+  requestStoreByUrl(
+    requestStoreByUrlParams: RequestStoreByUrlParams,
+  ): Promise<RequestStoreByUrlMutation["requestStoreByURL"] | undefined>;
+
+  getProductById(
+    productByIdParams: ProductByIdParams,
+  ): Promise<ProductByIdQuery["productByID"] | undefined>;
+
+  getProductsByDomainV2(
+    productsByDomainV2Params: ProductsByDomainV2Params,
+  ): Promise<ProductsByDomainV2Query["productsByDomainV2"] | undefined>;
 }
 
 class RyeClient implements IRyeClient {
