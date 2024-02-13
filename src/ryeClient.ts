@@ -97,13 +97,15 @@ interface IRyeClient {
   updateCartBuyerIdentity(
     updateCartBuyerIdentityParams: UpdateCartBuyerIdentityParams,
   ): Promise<
-    UpdateCartBuyerIdentityMutation["updateCartBuyerIdentity"] | undefined>;
+    UpdateCartBuyerIdentityMutation["updateCartBuyerIdentity"] | undefined
+  >;
 
   updateCartSelectedShippingOptions(
     updateCartSelectedShippingOptionsParams: UpdateCartSelectedShippingOptionsParams,
   ): Promise<
     | UpdateCartSelectedShippingOptionsMutation["updateCartSelectedShippingOptions"]
-    | undefined>;
+    | undefined
+  >;
 
   submitCart(
     submitCartParams: SubmitCartParams,
@@ -118,7 +120,8 @@ interface IRyeClient {
   ): Promise<CheckoutByCartIdQuery["checkoutByCartID"] | undefined>;
 
   getEnvironmentToken(): Promise<
-    EnvironmentTokenQuery["environmentToken"] | undefined>;
+    EnvironmentTokenQuery["environmentToken"] | undefined
+  >;
 
   getShopifyAppInformation(
     shopifyAppParams: ShopifyAppParams,
@@ -126,8 +129,7 @@ interface IRyeClient {
 
   requestProductByUrl(
     requestProductByUrlParams: RequestProductByUrlParams,
-  ): Promise<
-    RequestProductByUrlMutation["requestProductByURL"] | undefined>;
+  ): Promise<RequestProductByUrlMutation["requestProductByURL"] | undefined>;
 
   requestStoreByUrl(
     requestStoreByUrlParams: RequestStoreByUrlParams,
