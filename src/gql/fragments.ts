@@ -280,3 +280,53 @@ export const AdditionalProductDetails = graphql(`
     }
   }
 `);
+
+export const ShopifyProductEdge = graphql(`
+  fragment ShopifyProductEdge on ShopifyProductEdge {
+    cursor
+    node {
+      ...ShopifyProduct
+    }
+  }
+`);
+
+export const ShopifyProduct = graphql(`
+  fragment ShopifyProduct on ShopifyProduct {
+    id
+    title
+    description
+    vendor
+    url
+    marketplace
+    isAvailable
+    price {
+      value
+      currency
+      displayValue
+    }
+    images {
+      url
+    }
+    variants {
+      title
+      image {
+        url
+      }
+    }
+    descriptionHTML
+    collectionHandle
+    handle
+    maxPrice
+    minPrice
+    productType
+    createdAt
+    publishedAt
+    storeCanonicalURL
+    storeDomain
+    options {
+      name
+      position
+      values
+    }
+  }
+`);

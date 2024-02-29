@@ -112,3 +112,24 @@ export type ProductsByDomainV2Params = {
   pagination: OffsetPaginationInput;
   includeAdditionalProductDetails: boolean;
 };
+
+export type IntegratedShopifyStoreParams = {
+  canonicalDomain: string;
+  productsIDs: string[];
+  collectionsLast?: number;
+  collectionsFirst?: number;
+  collectionsAfter?: string;
+  collectionsBefore?: string;
+  productsFirst?: number;
+  productsLast?: number;
+  productsAfter?: string;
+  productsBefore?: string;
+};
+
+export type ShopifyCollectionParams = {
+  collectionId: string;
+  productsFirst?: number;
+  productsLast?: number;
+  productsAfter?: string;
+  productsBefore?: string;
+};

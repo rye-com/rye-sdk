@@ -1,6 +1,6 @@
 {
   "name": "@rye-api/rye-sdk",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "SDK for the Rye API",
   "repository": {
     "type": "git",

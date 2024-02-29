@@ -20,6 +20,7 @@ import { CREATE_CART_MUTATION } from "./gql/createCart";
 import { DELETE_CART_ITEMS_MUTATION } from "./gql/deleteCartItems";
 import { ENVIRONMENT_TOKEN_QUERY } from "./gql/environmentToken";
 import { GET_CART_QUERY } from "./gql/getCart";
+import { INTEGRATED_SHOPIFY_STORE_QUERY } from "./gql/integratedShopifyStore";
 import { ORDER_BY_ID_QUERY } from "./gql/orderById";
 import { PRODUCT_BY_ID_QUERY } from "./gql/productById";
 import { PRODUCTS_BY_DOMAIN_V2_QUERY } from "./gql/productsByDomainV2";
@@ -27,6 +28,7 @@ import { REMOVE_CART_MUTATION } from "./gql/removeCart";
 import { REQUEST_PRODUCT_BY_URL_MUTATION } from "./gql/requestProductByURL";
 import { REQUEST_STORE_BY_URL_MUTATION } from "./gql/requestStoreByURL";
 import { SHOPIFY_APP_QUERY } from "./gql/shopifyApp";
+import { SHOPIFY_COLLECTION_QUERY } from "./gql/shopifyCollection";
 import { SUBMIT_CART_MUTATION } from "./gql/submitCart";
 import { UPDATE_CART_BUYER_IDENTITY_MUTATION } from "./gql/updateCartBuyerIdentity";
 import { UPDATE_CART_ITEMS_MUTATION } from "./gql/updateCartItems";
@@ -38,6 +40,7 @@ import {
   DeleteCartItemsMutation,
   EnvironmentTokenQuery,
   GetCartQuery,
+  IntegratedShopifyStoreQuery,
   OrderByIdQuery,
   ProductByIdQuery,
   ProductsByDomainV2Query,
@@ -45,6 +48,7 @@ import {
   RequestProductByUrlMutation,
   RequestStoreByUrlMutation,
   ShopifyAppQuery,
+  ShopifyCollectionQuery,
   SubmitCartMutation,
   UpdateCartBuyerIdentityMutation,
   UpdateCartItemsMutation,
@@ -56,6 +60,7 @@ import {
   CreateCartParams,
   DeleteCartItemsParams,
   GetCartParams,
+  IntegratedShopifyStoreParams,
   OrderByIdParams,
   ProductByIdParams,
   ProductsByDomainV2Params,
@@ -63,6 +68,7 @@ import {
   RequestProductByUrlParams,
   RequestStoreByUrlParams,
   ShopifyAppParams,
+  ShopifyCollectionParams,
   SubmitCartParams,
   UpdateCartBuyerIdentityParams,
   UpdateCartItemsParams,
@@ -142,6 +148,14 @@ interface IRyeClient {
   getProductsByDomainV2(
     productsByDomainV2Params: ProductsByDomainV2Params,
   ): Promise<ProductsByDomainV2Query["productsByDomainV2"] | undefined>;
+
+  getIntegratedShopifyStore(
+    integratedShopifyStoreParams: IntegratedShopifyStoreParams,
+  ): Promise<IntegratedShopifyStoreQuery["integratedShopifyStore"] | undefined>;
+
+  getShopifyCollection(
+    shopifyCollectionParams: ShopifyCollectionParams,
+  ): Promise<ShopifyCollectionQuery["shopifyCollection"] | undefined>;
 }
 
 class RyeClient implements IRyeClient {
@@ -477,6 +491,40 @@ class RyeClient implements IRyeClient {
     );
 
     return response.data?.productsByDomainV2;
+  };
+
+  /**
+   * Returns information about an integrated Shopify store, including products and collections.
+   * @param integratedShopifyStoreParams - The params for the integratedShopifyStore query.
+   * @returns A promise that resolves to the store data.
+   */
+  getIntegratedShopifyStore = async (
+    integratedShopifyStoreParams: IntegratedShopifyStoreParams,
+  ): Promise<
+    IntegratedShopifyStoreQuery["integratedShopifyStore"] | undefined
+  > => {
+    const response = await this.apiRequest(
+      INTEGRATED_SHOPIFY_STORE_QUERY,
+      integratedShopifyStoreParams,
+    );
+
+    return response.data?.integratedShopifyStore;
+  };
+
+  /**
+   * Returns information about a shopify collection.
+   * @param shopifyCollectionParams - The params for the shopifyCollection query.
+   * @returns A promise that resolves to the shopify collection.
+   */
+  getShopifyCollection = async (
+    shopifyCollectionParams: ShopifyCollectionParams,
+  ): Promise<ShopifyCollectionQuery["shopifyCollection"] | undefined> => {
+    const response = await this.apiRequest(
+      SHOPIFY_COLLECTION_QUERY,
+      shopifyCollectionParams,
+    );
+
+    return response.data?.shopifyCollection;
   };
 }
 
