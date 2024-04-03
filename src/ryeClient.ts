@@ -1,11 +1,11 @@
+import { retryExchange, type RetryExchangeOptions } from "@urql/exchange-retry";
 import {
-  AnyVariables,
-  cacheExchange,
+  type AnyVariables,
   Client,
-  DocumentInput,
+  type DocumentInput,
   fetchExchange,
-  OperationResult,
-  OperationResultSource,
+  type OperationResult,
+  type OperationResultSource,
 } from "urql";
 
 import {
@@ -185,9 +185,17 @@ class RyeClient implements IRyeClient {
         "RyeClient requires an authHeader and shopperIp to be set.",
       );
     }
+
+    const retryOptions: RetryExchangeOptions = {
+      initialDelayMs: 500,
+      maxNumberAttempts: 2,
+      // Retry on network errors
+      retryIf: (error) => error.networkError !== undefined,
+    }
+
     return new Client({
       url: GRAPHQL_ENDPOINTS[this.environment],
-      exchanges: [cacheExchange, fetchExchange],
+      exchanges: [retryExchange(retryOptions), fetchExchange],
       fetchOptions: () => {
         return {
           headers: {
