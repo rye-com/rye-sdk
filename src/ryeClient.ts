@@ -1,6 +1,5 @@
 import {
   AnyVariables,
-  cacheExchange,
   Client,
   DocumentInput,
   fetchExchange,
@@ -187,7 +186,7 @@ class RyeClient implements IRyeClient {
     }
     return new Client({
       url: GRAPHQL_ENDPOINTS[this.environment],
-      exchanges: [cacheExchange, fetchExchange],
+      exchanges: [fetchExchange],
       fetchOptions: () => {
         return {
           headers: {
