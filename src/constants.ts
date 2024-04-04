@@ -9,6 +9,8 @@ export enum ENVIRONMENT {
   LOCAL = 'local',
 }
 
+export const DEFAULT_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+
 export const GRAPHQL_ENDPOINTS = {
   [ENVIRONMENT.PRODUCTION]: 'https://graphql.api.rye.com/v1/query',
   [ENVIRONMENT.STAGING]: 'https://staging.beta.graphql.api.rye.com/v1/query',

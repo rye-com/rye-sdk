@@ -8,7 +8,13 @@ import {
   type OperationResultSource,
 } from 'urql';
 
-import { ENVIRONMENT, GRAPHQL_ENDPOINTS, OPERATION, RYE_SHOPPER_IP } from './constants';
+import {
+  DEFAULT_ENVIRONMENT,
+  ENVIRONMENT,
+  GRAPHQL_ENDPOINTS,
+  OPERATION,
+  RYE_SHOPPER_IP,
+} from './constants';
 import { ADD_CART_ITEMS_MUTATION } from './gql/addCartItems';
 import { CHECKOUT_BY_CART_ID_QUERY } from './gql/checkoutByCartId';
 import { CREATE_CART_MUTATION } from './gql/createCart';
@@ -49,7 +55,7 @@ import {
   UpdateCartItemsMutation,
   UpdateCartSelectedShippingOptionsMutation,
 } from './graphql/graphql';
-import {
+import type {
   AddCartItemsParams,
   CheckoutByCartIdParams,
   CreateCartParams,
@@ -69,6 +75,7 @@ import {
   UpdateCartItemsParams,
   UpdateCartSelectedShippingOptionsParams,
 } from './types';
+import { warnIfAuthHeaderInvalid } from './utils';
 
 interface IRyeClient {
   getCart(getCartParams: GetCartParams): Promise<GetCartQuery['getCart'] | undefined>;
@@ -144,16 +151,40 @@ interface IRyeClient {
   ): Promise<ShopifyCollectionQuery['shopifyCollection'] | undefined>;
 }
 
+interface RyeClientOptions {
+  authHeader: string;
+  /** @default {ENVIRONMENT.PRODUCTION} */
+  environment?: ENVIRONMENT;
+  shopperIp: string;
+}
+
 class RyeClient implements IRyeClient {
   private authHeader: string | null;
   private shopperIp: string | null;
   private environment: ENVIRONMENT;
   private ryeClient: Client;
 
-  constructor(authHeader: string, shopperIp: string, environment = ENVIRONMENT.PRODUCTION) {
-    this.authHeader = authHeader;
-    this.shopperIp = shopperIp;
-    this.environment = environment;
+  /**
+   * @deprecated This signature is deprecated. Please use the alternate constructor signature that takes a {@link RyeClientOptions} bag.
+   */
+  constructor(authHeader: string, shopperIp: string, environment?: ENVIRONMENT);
+  constructor(options: RyeClientOptions);
+  constructor(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...args: any[]
+  ) {
+    if (args.length === 1) {
+      const options = args[0];
+      this.authHeader = options.authHeader;
+      this.shopperIp = options.shopperIp;
+      this.environment = options.environment || DEFAULT_ENVIRONMENT;
+    } else {
+      const [authHeader, shopperIp, environment] = args;
+      this.authHeader = authHeader;
+      this.shopperIp = shopperIp;
+      this.environment = environment || DEFAULT_ENVIRONMENT;
+    }
+
     this.ryeClient = this.initializeClient();
   }
 
@@ -165,6 +196,8 @@ class RyeClient implements IRyeClient {
     if (!this.authHeader || !this.shopperIp) {
       throw new Error('RyeClient requires an authHeader and shopperIp to be set.');
     }
+
+    warnIfAuthHeaderInvalid(this.authHeader);
 
     const retryOptions: RetryExchangeOptions = {
       initialDelayMs: 500,
