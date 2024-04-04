@@ -1,4 +1,4 @@
-import { graphql } from "../graphql";
+import { graphql } from '../graphql';
 
 export const ORDER_BY_ID_QUERY = graphql(`
   query OrderById($id: ID!) {

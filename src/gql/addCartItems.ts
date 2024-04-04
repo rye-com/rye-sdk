@@ -1,4 +1,4 @@
-import { graphql } from "../graphql";
+import { graphql } from '../graphql';
 
 export const ADD_CART_ITEMS_MUTATION = graphql(`
   mutation AddCartItems(

@@ -1,4 +1,4 @@
-import { retryExchange, type RetryExchangeOptions } from "@urql/exchange-retry";
+import { retryExchange, type RetryExchangeOptions } from '@urql/exchange-retry';
 import {
   type AnyVariables,
   Client,
@@ -6,33 +6,28 @@ import {
   fetchExchange,
   type OperationResult,
   type OperationResultSource,
-} from "urql";
+} from 'urql';
 
-import {
-  ENVIRONMENT,
-  GRAPHQL_ENDPOINTS,
-  OPERATION,
-  RYE_SHOPPER_IP,
-} from "./constants";
-import { ADD_CART_ITEMS_MUTATION } from "./gql/addCartItems";
-import { CHECKOUT_BY_CART_ID_QUERY } from "./gql/checkoutByCartId";
-import { CREATE_CART_MUTATION } from "./gql/createCart";
-import { DELETE_CART_ITEMS_MUTATION } from "./gql/deleteCartItems";
-import { ENVIRONMENT_TOKEN_QUERY } from "./gql/environmentToken";
-import { GET_CART_QUERY } from "./gql/getCart";
-import { INTEGRATED_SHOPIFY_STORE_QUERY } from "./gql/integratedShopifyStore";
-import { ORDER_BY_ID_QUERY } from "./gql/orderById";
-import { PRODUCT_BY_ID_QUERY } from "./gql/productById";
-import { PRODUCTS_BY_DOMAIN_V2_QUERY } from "./gql/productsByDomainV2";
-import { REMOVE_CART_MUTATION } from "./gql/removeCart";
-import { REQUEST_PRODUCT_BY_URL_MUTATION } from "./gql/requestProductByURL";
-import { REQUEST_STORE_BY_URL_MUTATION } from "./gql/requestStoreByURL";
-import { SHOPIFY_APP_QUERY } from "./gql/shopifyApp";
-import { SHOPIFY_COLLECTION_QUERY } from "./gql/shopifyCollection";
-import { SUBMIT_CART_MUTATION } from "./gql/submitCart";
-import { UPDATE_CART_BUYER_IDENTITY_MUTATION } from "./gql/updateCartBuyerIdentity";
-import { UPDATE_CART_ITEMS_MUTATION } from "./gql/updateCartItems";
-import { UPDATE_CART_SELECTED_SHIPPING_OPTIONS_MUTATION } from "./gql/updateCartSelectedShippingOptions";
+import { ENVIRONMENT, GRAPHQL_ENDPOINTS, OPERATION, RYE_SHOPPER_IP } from './constants';
+import { ADD_CART_ITEMS_MUTATION } from './gql/addCartItems';
+import { CHECKOUT_BY_CART_ID_QUERY } from './gql/checkoutByCartId';
+import { CREATE_CART_MUTATION } from './gql/createCart';
+import { DELETE_CART_ITEMS_MUTATION } from './gql/deleteCartItems';
+import { ENVIRONMENT_TOKEN_QUERY } from './gql/environmentToken';
+import { GET_CART_QUERY } from './gql/getCart';
+import { INTEGRATED_SHOPIFY_STORE_QUERY } from './gql/integratedShopifyStore';
+import { ORDER_BY_ID_QUERY } from './gql/orderById';
+import { PRODUCT_BY_ID_QUERY } from './gql/productById';
+import { PRODUCTS_BY_DOMAIN_V2_QUERY } from './gql/productsByDomainV2';
+import { REMOVE_CART_MUTATION } from './gql/removeCart';
+import { REQUEST_PRODUCT_BY_URL_MUTATION } from './gql/requestProductByURL';
+import { REQUEST_STORE_BY_URL_MUTATION } from './gql/requestStoreByURL';
+import { SHOPIFY_APP_QUERY } from './gql/shopifyApp';
+import { SHOPIFY_COLLECTION_QUERY } from './gql/shopifyCollection';
+import { SUBMIT_CART_MUTATION } from './gql/submitCart';
+import { UPDATE_CART_BUYER_IDENTITY_MUTATION } from './gql/updateCartBuyerIdentity';
+import { UPDATE_CART_ITEMS_MUTATION } from './gql/updateCartItems';
+import { UPDATE_CART_SELECTED_SHIPPING_OPTIONS_MUTATION } from './gql/updateCartSelectedShippingOptions';
 import {
   AddCartItemsMutation,
   CheckoutByCartIdQuery,
@@ -53,7 +48,7 @@ import {
   UpdateCartBuyerIdentityMutation,
   UpdateCartItemsMutation,
   UpdateCartSelectedShippingOptionsMutation,
-} from "./graphql/graphql";
+} from './graphql/graphql';
 import {
   AddCartItemsParams,
   CheckoutByCartIdParams,
@@ -73,89 +68,80 @@ import {
   UpdateCartBuyerIdentityParams,
   UpdateCartItemsParams,
   UpdateCartSelectedShippingOptionsParams,
-} from "./types";
+} from './types';
 
 interface IRyeClient {
-  getCart(
-    getCartParams: GetCartParams,
-  ): Promise<GetCartQuery["getCart"] | undefined>;
+  getCart(getCartParams: GetCartParams): Promise<GetCartQuery['getCart'] | undefined>;
 
   createCart(
     createCartParams: CreateCartParams,
-  ): Promise<CreateCartMutation["createCart"] | undefined>;
+  ): Promise<CreateCartMutation['createCart'] | undefined>;
 
   addCartItems(
     addCartItemsParams: AddCartItemsParams,
-  ): Promise<AddCartItemsMutation["addCartItems"] | undefined>;
+  ): Promise<AddCartItemsMutation['addCartItems'] | undefined>;
 
   deleteCartItems(
     deleteCartItemsParams: DeleteCartItemsParams,
-  ): Promise<DeleteCartItemsMutation["deleteCartItems"] | undefined>;
+  ): Promise<DeleteCartItemsMutation['deleteCartItems'] | undefined>;
 
   updateCartItems(
     updateCartItemsParams: UpdateCartItemsParams,
-  ): Promise<UpdateCartItemsMutation["updateCartItems"] | undefined>;
+  ): Promise<UpdateCartItemsMutation['updateCartItems'] | undefined>;
 
   removeCart(
     removeCartItemsParams: RemoveCartParams,
-  ): Promise<RemoveCartMutation["removeCart"] | undefined>;
+  ): Promise<RemoveCartMutation['removeCart'] | undefined>;
 
   updateCartBuyerIdentity(
     updateCartBuyerIdentityParams: UpdateCartBuyerIdentityParams,
-  ): Promise<
-    UpdateCartBuyerIdentityMutation["updateCartBuyerIdentity"] | undefined
-  >;
+  ): Promise<UpdateCartBuyerIdentityMutation['updateCartBuyerIdentity'] | undefined>;
 
   updateCartSelectedShippingOptions(
     updateCartSelectedShippingOptionsParams: UpdateCartSelectedShippingOptionsParams,
   ): Promise<
-    | UpdateCartSelectedShippingOptionsMutation["updateCartSelectedShippingOptions"]
-    | undefined
+    UpdateCartSelectedShippingOptionsMutation['updateCartSelectedShippingOptions'] | undefined
   >;
 
   submitCart(
     submitCartParams: SubmitCartParams,
-  ): Promise<SubmitCartMutation["submitCart"] | undefined>;
+  ): Promise<SubmitCartMutation['submitCart'] | undefined>;
 
-  orderById(
-    orderByIdParams: OrderByIdParams,
-  ): Promise<OrderByIdQuery["orderByID"] | undefined>;
+  orderById(orderByIdParams: OrderByIdParams): Promise<OrderByIdQuery['orderByID'] | undefined>;
 
   checkoutByCartId(
     checkoutByCartIdParams: CheckoutByCartIdParams,
-  ): Promise<CheckoutByCartIdQuery["checkoutByCartID"] | undefined>;
+  ): Promise<CheckoutByCartIdQuery['checkoutByCartID'] | undefined>;
 
-  getEnvironmentToken(): Promise<
-    EnvironmentTokenQuery["environmentToken"] | undefined
-  >;
+  getEnvironmentToken(): Promise<EnvironmentTokenQuery['environmentToken'] | undefined>;
 
   getShopifyAppInformation(
     shopifyAppParams: ShopifyAppParams,
-  ): Promise<ShopifyAppQuery["shopifyApp"] | undefined>;
+  ): Promise<ShopifyAppQuery['shopifyApp'] | undefined>;
 
   requestProductByUrl(
     requestProductByUrlParams: RequestProductByUrlParams,
-  ): Promise<RequestProductByUrlMutation["requestProductByURL"] | undefined>;
+  ): Promise<RequestProductByUrlMutation['requestProductByURL'] | undefined>;
 
   requestStoreByUrl(
     requestStoreByUrlParams: RequestStoreByUrlParams,
-  ): Promise<RequestStoreByUrlMutation["requestStoreByURL"] | undefined>;
+  ): Promise<RequestStoreByUrlMutation['requestStoreByURL'] | undefined>;
 
   getProductById(
     productByIdParams: ProductByIdParams,
-  ): Promise<ProductByIdQuery["productByID"] | undefined>;
+  ): Promise<ProductByIdQuery['productByID'] | undefined>;
 
   getProductsByDomainV2(
     productsByDomainV2Params: ProductsByDomainV2Params,
-  ): Promise<ProductsByDomainV2Query["productsByDomainV2"] | undefined>;
+  ): Promise<ProductsByDomainV2Query['productsByDomainV2'] | undefined>;
 
   getIntegratedShopifyStore(
     integratedShopifyStoreParams: IntegratedShopifyStoreParams,
-  ): Promise<IntegratedShopifyStoreQuery["integratedShopifyStore"] | undefined>;
+  ): Promise<IntegratedShopifyStoreQuery['integratedShopifyStore'] | undefined>;
 
   getShopifyCollection(
     shopifyCollectionParams: ShopifyCollectionParams,
-  ): Promise<ShopifyCollectionQuery["shopifyCollection"] | undefined>;
+  ): Promise<ShopifyCollectionQuery['shopifyCollection'] | undefined>;
 }
 
 class RyeClient implements IRyeClient {
@@ -164,11 +150,7 @@ class RyeClient implements IRyeClient {
   private environment: ENVIRONMENT;
   private ryeClient: Client;
 
-  constructor(
-    authHeader: string,
-    shopperIp: string,
-    environment = ENVIRONMENT.PRODUCTION,
-  ) {
+  constructor(authHeader: string, shopperIp: string, environment = ENVIRONMENT.PRODUCTION) {
     this.authHeader = authHeader;
     this.shopperIp = shopperIp;
     this.environment = environment;
@@ -181,9 +163,7 @@ class RyeClient implements IRyeClient {
    */
   private initializeClient() {
     if (!this.authHeader || !this.shopperIp) {
-      throw new Error(
-        "RyeClient requires an authHeader and shopperIp to be set.",
-      );
+      throw new Error('RyeClient requires an authHeader and shopperIp to be set.');
     }
 
     const retryOptions: RetryExchangeOptions = {
@@ -191,7 +171,7 @@ class RyeClient implements IRyeClient {
       maxNumberAttempts: 2,
       // Retry on network errors
       retryIf: (error) => error.networkError !== undefined,
-    }
+    };
 
     return new Client({
       url: GRAPHQL_ENDPOINTS[this.environment],
@@ -226,7 +206,7 @@ class RyeClient implements IRyeClient {
     try {
       return await tryRequest();
     } catch (e) {
-      console.error("Error requesting Rye API. ", {
+      console.error('Error requesting Rye API. ', {
         query,
         variables,
         method,
@@ -241,9 +221,7 @@ class RyeClient implements IRyeClient {
    * @param getCartParams - The params for the getCart query.
    * @returns A promise that resolves to the cart data or undefined.
    */
-  getCart = async (
-    getCartParams: GetCartParams,
-  ): Promise<GetCartQuery["getCart"] | undefined> => {
+  getCart = async (getCartParams: GetCartParams): Promise<GetCartQuery['getCart'] | undefined> => {
     const response = await this.apiRequest(GET_CART_QUERY, getCartParams);
     return response?.data?.getCart;
   };
@@ -255,7 +233,7 @@ class RyeClient implements IRyeClient {
    */
   createCart = async (
     createCartParams: CreateCartParams,
-  ): Promise<CreateCartMutation["createCart"] | undefined> => {
+  ): Promise<CreateCartMutation['createCart'] | undefined> => {
     const response = await this.apiRequest(
       CREATE_CART_MUTATION,
       createCartParams,
@@ -271,7 +249,7 @@ class RyeClient implements IRyeClient {
    */
   addCartItems = async (
     addCartItemsParams: AddCartItemsParams,
-  ): Promise<AddCartItemsMutation["addCartItems"] | undefined> => {
+  ): Promise<AddCartItemsMutation['addCartItems'] | undefined> => {
     const response = await this.apiRequest(
       ADD_CART_ITEMS_MUTATION,
       addCartItemsParams,
@@ -287,7 +265,7 @@ class RyeClient implements IRyeClient {
    */
   deleteCartItems = async (
     deleteCartItemsParams: DeleteCartItemsParams,
-  ): Promise<DeleteCartItemsMutation["deleteCartItems"] | undefined> => {
+  ): Promise<DeleteCartItemsMutation['deleteCartItems'] | undefined> => {
     const response = await this.apiRequest(
       DELETE_CART_ITEMS_MUTATION,
       deleteCartItemsParams,
@@ -303,7 +281,7 @@ class RyeClient implements IRyeClient {
    */
   updateCartItems = async (
     updateCartItemsParams: UpdateCartItemsParams,
-  ): Promise<UpdateCartItemsMutation["updateCartItems"] | undefined> => {
+  ): Promise<UpdateCartItemsMutation['updateCartItems'] | undefined> => {
     const response = await this.apiRequest(
       UPDATE_CART_ITEMS_MUTATION,
       updateCartItemsParams,
@@ -319,7 +297,7 @@ class RyeClient implements IRyeClient {
    */
   removeCart = async (
     removeCartItemsParams: RemoveCartParams,
-  ): Promise<RemoveCartMutation["removeCart"] | undefined> => {
+  ): Promise<RemoveCartMutation['removeCart'] | undefined> => {
     const response = await this.apiRequest(
       REMOVE_CART_MUTATION,
       removeCartItemsParams,
@@ -335,9 +313,7 @@ class RyeClient implements IRyeClient {
    */
   updateCartBuyerIdentity = async (
     updateCartBuyerIdentityParams: UpdateCartBuyerIdentityParams,
-  ): Promise<
-    UpdateCartBuyerIdentityMutation["updateCartBuyerIdentity"] | undefined
-  > => {
+  ): Promise<UpdateCartBuyerIdentityMutation['updateCartBuyerIdentity'] | undefined> => {
     const response = await this.apiRequest(
       UPDATE_CART_BUYER_IDENTITY_MUTATION,
       updateCartBuyerIdentityParams,
@@ -354,8 +330,7 @@ class RyeClient implements IRyeClient {
   updateCartSelectedShippingOptions = async (
     updateCartSelectedShippingOptionsParams: UpdateCartSelectedShippingOptionsParams,
   ): Promise<
-    | UpdateCartSelectedShippingOptionsMutation["updateCartSelectedShippingOptions"]
-    | undefined
+    UpdateCartSelectedShippingOptionsMutation['updateCartSelectedShippingOptions'] | undefined
   > => {
     const response = await this.apiRequest(
       UPDATE_CART_SELECTED_SHIPPING_OPTIONS_MUTATION,
@@ -372,7 +347,7 @@ class RyeClient implements IRyeClient {
    */
   submitCart = async (
     submitCartParams: SubmitCartParams,
-  ): Promise<SubmitCartMutation["submitCart"] | undefined> => {
+  ): Promise<SubmitCartMutation['submitCart'] | undefined> => {
     const response = await this.apiRequest(
       SUBMIT_CART_MUTATION,
       submitCartParams,
@@ -388,7 +363,7 @@ class RyeClient implements IRyeClient {
    */
   orderById = async (
     orderByIdParams: OrderByIdParams,
-  ): Promise<OrderByIdQuery["orderByID"] | undefined> => {
+  ): Promise<OrderByIdQuery['orderByID'] | undefined> => {
     const response = await this.apiRequest(ORDER_BY_ID_QUERY, orderByIdParams);
     return response?.data?.orderByID;
   };
@@ -400,11 +375,8 @@ class RyeClient implements IRyeClient {
    */
   checkoutByCartId = async (
     checkoutByCartIdParams: CheckoutByCartIdParams,
-  ): Promise<CheckoutByCartIdQuery["checkoutByCartID"] | undefined> => {
-    const response = await this.apiRequest(
-      CHECKOUT_BY_CART_ID_QUERY,
-      checkoutByCartIdParams,
-    );
+  ): Promise<CheckoutByCartIdQuery['checkoutByCartID'] | undefined> => {
+    const response = await this.apiRequest(CHECKOUT_BY_CART_ID_QUERY, checkoutByCartIdParams);
     return response?.data?.checkoutByCartID;
   };
 
@@ -413,7 +385,7 @@ class RyeClient implements IRyeClient {
    * @returns A promise that resolves to the env token or undefined.
    */
   getEnvironmentToken = async (): Promise<
-    EnvironmentTokenQuery["environmentToken"] | undefined
+    EnvironmentTokenQuery['environmentToken'] | undefined
   > => {
     const response = await this.apiRequest(ENVIRONMENT_TOKEN_QUERY, {});
 
@@ -427,7 +399,7 @@ class RyeClient implements IRyeClient {
    */
   getShopifyAppInformation = async (
     shopifyAppParams: ShopifyAppParams,
-  ): Promise<ShopifyAppQuery["shopifyApp"] | undefined> => {
+  ): Promise<ShopifyAppQuery['shopifyApp'] | undefined> => {
     const response = await this.apiRequest(SHOPIFY_APP_QUERY, shopifyAppParams);
 
     return response.data?.shopifyApp;
@@ -440,9 +412,7 @@ class RyeClient implements IRyeClient {
    */
   requestProductByUrl = async (
     requestProductByUrlParams: RequestProductByUrlParams,
-  ): Promise<
-    RequestProductByUrlMutation["requestProductByURL"] | undefined
-  > => {
+  ): Promise<RequestProductByUrlMutation['requestProductByURL'] | undefined> => {
     const response = await this.apiRequest(
       REQUEST_PRODUCT_BY_URL_MUTATION,
       requestProductByUrlParams,
@@ -459,7 +429,7 @@ class RyeClient implements IRyeClient {
    */
   requestStoreByUrl = async (
     requestStoreByUrlParams: RequestStoreByUrlParams,
-  ): Promise<RequestStoreByUrlMutation["requestStoreByURL"] | undefined> => {
+  ): Promise<RequestStoreByUrlMutation['requestStoreByURL'] | undefined> => {
     const response = await this.apiRequest(
       REQUEST_STORE_BY_URL_MUTATION,
       requestStoreByUrlParams,
@@ -476,11 +446,8 @@ class RyeClient implements IRyeClient {
    */
   getProductById = async (
     productByIdParams: ProductByIdParams,
-  ): Promise<ProductByIdQuery["productByID"] | undefined> => {
-    const response = await this.apiRequest(
-      PRODUCT_BY_ID_QUERY,
-      productByIdParams,
-    );
+  ): Promise<ProductByIdQuery['productByID'] | undefined> => {
+    const response = await this.apiRequest(PRODUCT_BY_ID_QUERY, productByIdParams);
 
     return response.data?.productByID;
   };
@@ -492,11 +459,8 @@ class RyeClient implements IRyeClient {
    */
   getProductsByDomainV2 = async (
     productsByDomainV2Params: ProductsByDomainV2Params,
-  ): Promise<ProductsByDomainV2Query["productsByDomainV2"] | undefined> => {
-    const response = await this.apiRequest(
-      PRODUCTS_BY_DOMAIN_V2_QUERY,
-      productsByDomainV2Params,
-    );
+  ): Promise<ProductsByDomainV2Query['productsByDomainV2'] | undefined> => {
+    const response = await this.apiRequest(PRODUCTS_BY_DOMAIN_V2_QUERY, productsByDomainV2Params);
 
     return response.data?.productsByDomainV2;
   };
@@ -508,9 +472,7 @@ class RyeClient implements IRyeClient {
    */
   getIntegratedShopifyStore = async (
     integratedShopifyStoreParams: IntegratedShopifyStoreParams,
-  ): Promise<
-    IntegratedShopifyStoreQuery["integratedShopifyStore"] | undefined
-  > => {
+  ): Promise<IntegratedShopifyStoreQuery['integratedShopifyStore'] | undefined> => {
     const response = await this.apiRequest(
       INTEGRATED_SHOPIFY_STORE_QUERY,
       integratedShopifyStoreParams,
@@ -526,11 +488,8 @@ class RyeClient implements IRyeClient {
    */
   getShopifyCollection = async (
     shopifyCollectionParams: ShopifyCollectionParams,
-  ): Promise<ShopifyCollectionQuery["shopifyCollection"] | undefined> => {
-    const response = await this.apiRequest(
-      SHOPIFY_COLLECTION_QUERY,
-      shopifyCollectionParams,
-    );
+  ): Promise<ShopifyCollectionQuery['shopifyCollection'] | undefined> => {
+    const response = await this.apiRequest(SHOPIFY_COLLECTION_QUERY, shopifyCollectionParams);
 
     return response.data?.shopifyCollection;
   };
