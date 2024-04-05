@@ -18,6 +18,7 @@ jobs:
       - run: npm ci
       - run: npm run codegen
       - run: npm run build
+      - run: npm run postbuild
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.RYE_NPM_TOKEN }}
