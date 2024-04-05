@@ -1,4 +1,4 @@
-import { graphql } from "../graphql";
+import { graphql } from '../graphql';
 
 export const ENVIRONMENT_TOKEN_QUERY = graphql(`
   query EnvironmentToken {

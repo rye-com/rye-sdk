@@ -1,4 +1,4 @@
-import { graphql } from "../graphql";
+import { graphql } from '../graphql';
 
 export const PRODUCTS_BY_DOMAIN_V2_QUERY = graphql(`
   query ProductsByDomainV2(

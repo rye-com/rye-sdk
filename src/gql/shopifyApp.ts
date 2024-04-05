@@ -1,4 +1,4 @@
-import { graphql } from "../graphql";
+import { graphql } from '../graphql';
 
 export const SHOPIFY_APP_QUERY = graphql(`
   query ShopifyApp($storeCanonicalDomain: String!) {

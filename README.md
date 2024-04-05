@@ -20,14 +20,10 @@ The client needs to be created with your account's API authorization header and 
 
 ```ts
 // Production
-const ryeClient = new RyeClient("<AUTH_HEADER>", "<SHOPPER_IP>");
+const ryeClient = new RyeClient('<AUTH_HEADER>', '<SHOPPER_IP>');
 
 // Staging
-const ryeClient = new RyeClient(
-  "<AUTH_HEADER>",
-  "<SHOPPER_IP>",
-  ENVIRONMENT.STAGING,
-);
+const ryeClient = new RyeClient('<AUTH_HEADER>', '<SHOPPER_IP>', ENVIRONMENT.STAGING);
 ```
 
 ### Mutations
@@ -37,7 +33,7 @@ const ryeClient = new RyeClient(
 ```ts
 const result = await ryeClient.requestProductByUrl({
   input: {
-    url: "https://www.amazon.com/dp/B00A2KD8NY",
+    url: 'https://www.amazon.com/dp/B00A2KD8NY',
     marketplace: Marketplace.Amazon,
   },
 });
@@ -48,7 +44,7 @@ const result = await ryeClient.requestProductByUrl({
 ```ts
 const result = await ryeClient.requestStoreByURL({
   input: {
-    url: "https://rye-test-store.myshopify.com",
+    url: 'https://rye-test-store.myshopify.com',
   },
 });
 ```
@@ -63,21 +59,21 @@ const result = await ryeClient.createCart({
       amazonCartItemsInput: [
         {
           quantity: 1,
-          productId: "B007W3DDUW",
+          productId: 'B007W3DDUW',
         },
       ],
     },
     buyerIdentity: {
-      firstName: "<FIRST_NAME>",
-      lastName: "<LAST_NAME>",
-      email: "<EMAIL>",
-      phone: "<PHONE>",
-      address1: "<ADDRESS_1>",
-      address2: "<ADDRESS_2>",
-      city: "<CITY>",
-      provinceCode: "<PROVINCE_CODE>",
-      countryCode: "<COUNTRY_CODE>",
-      postalCode: "<POSTAL_CODE>",
+      firstName: '<FIRST_NAME>',
+      lastName: '<LAST_NAME>',
+      email: '<EMAIL>',
+      phone: '<PHONE>',
+      address1: '<ADDRESS_1>',
+      address2: '<ADDRESS_2>',
+      city: '<CITY>',
+      provinceCode: '<PROVINCE_CODE>',
+      countryCode: '<COUNTRY_CODE>',
+      postalCode: '<POSTAL_CODE>',
     },
   },
 });
@@ -89,7 +85,7 @@ const result = await ryeClient.createCart({
       amazonCartItemsInput: [
         {
           quantity: 1,
-          productId: "B007W3DDUW",
+          productId: 'B007W3DDUW',
         },
       ],
     },
@@ -106,12 +102,12 @@ const result = await ryeClient.createCart({
 ```ts
 const result = await ryeClient.addCartItems({
   input: {
-    id: "<CART_ID>",
+    id: '<CART_ID>',
     items: {
       shopifyCartItemsInput: [
         {
           quantity: 1,
-          variantId: "44346795295022",
+          variantId: '44346795295022',
         },
       ],
     },
@@ -124,11 +120,11 @@ const result = await ryeClient.addCartItems({
 ```ts
 const result = await ryeClient.deleteCartItems({
   input: {
-    id: "<CART_ID>",
+    id: '<CART_ID>',
     items: {
       shopifyProducts: [
         {
-          variantId: "44346795295022",
+          variantId: '44346795295022',
         },
       ],
     },
@@ -141,11 +137,11 @@ const result = await ryeClient.deleteCartItems({
 ```ts
 const result = await ryeClient.updateCartItems({
   input: {
-    id: "<CART_ID>",
+    id: '<CART_ID>',
     items: {
       amazonCartItemsInput: [
         {
-          productId: "B007W3DDUW",
+          productId: 'B007W3DDUW',
           quantity: 2,
         },
       ],
@@ -159,18 +155,18 @@ const result = await ryeClient.updateCartItems({
 ```ts
 const result = await ryeClient.updateCartBuyerIdentity({
   input: {
-    id: "<CART_ID>",
+    id: '<CART_ID>',
     buyerIdentity: {
-      firstName: "<FIRST_NAME>",
-      lastName: "<LAST_NAME>",
-      email: "<EMAIL>",
-      phone: "<PHONE>",
-      address1: "<ADDRESS_1>",
-      address2: "<ADDRESS_2>",
-      city: "<CITY>",
-      provinceCode: "<PROVINCE_CODE>",
-      countryCode: "<COUNTRY_CODE>",
-      postalCode: "<POSTAL_CODE>",
+      firstName: '<FIRST_NAME>',
+      lastName: '<LAST_NAME>',
+      email: '<EMAIL>',
+      phone: '<PHONE>',
+      address1: '<ADDRESS_1>',
+      address2: '<ADDRESS_2>',
+      city: '<CITY>',
+      provinceCode: '<PROVINCE_CODE>',
+      countryCode: '<COUNTRY_CODE>',
+      postalCode: '<POSTAL_CODE>',
     },
   },
   fetchOffer: false, // Set to true to fetch offers for each store
@@ -184,11 +180,11 @@ const result = await ryeClient.updateCartBuyerIdentity({
 ```ts
 const result = await ryeClient.updateCartSelectedShippingOptions({
   input: {
-    id: "<CART_ID>",
+    id: '<CART_ID>',
     shippingOptions: [
       {
-        shippingId: "55cfdaa8c7702fb7f57be90",
-        store: "rye-dev-store.myshopify.com",
+        shippingId: '55cfdaa8c7702fb7f57be90',
+        store: 'rye-dev-store.myshopify.com',
       },
     ],
   },
@@ -204,19 +200,19 @@ const result = await ryeClient.updateCartSelectedShippingOptions({
 ```ts
 const result = await ryeClient.submitCart({
   input: {
-    id: "<CART_ID>",
-    token: "<PAYMENT_TOKEN>",
+    id: '<CART_ID>',
+    token: '<PAYMENT_TOKEN>',
     billingAddress: {
-      firstName: "<FIRST_NAME>",
-      lastName: "<LAST_NAME>",
-      email: "<EMAIL>",
-      phone: "<PHONE>",
-      address1: "<ADDRESS_1>",
-      address2: "<ADDRESS_2>",
-      city: "<CITY>",
-      provinceCode: "<PROVINCE_CODE>",
-      countryCode: "<COUNTRY_CODE>",
-      postalCode: "<POSTAL_CODE>",
+      firstName: '<FIRST_NAME>',
+      lastName: '<LAST_NAME>',
+      email: '<EMAIL>',
+      phone: '<PHONE>',
+      address1: '<ADDRESS_1>',
+      address2: '<ADDRESS_2>',
+      city: '<CITY>',
+      provinceCode: '<PROVINCE_CODE>',
+      countryCode: '<COUNTRY_CODE>',
+      postalCode: '<POSTAL_CODE>',
     },
   },
 });
@@ -227,7 +223,7 @@ const result = await ryeClient.submitCart({
 ```ts
 const result = await ryeClient.removeCart({
   input: {
-    id: "<CART_ID>",
+    id: '<CART_ID>',
   },
 });
 ```
@@ -239,8 +235,8 @@ const result = await ryeClient.removeCart({
 ```ts
 const result = await ryeClient.getProductById({
   input: {
-    id: "B007W3DDUW",
-    marketplace: "AMAZON",
+    id: 'B007W3DDUW',
+    marketplace: 'AMAZON',
   },
 });
 ```
@@ -250,7 +246,7 @@ const result = await ryeClient.getProductById({
 ```ts
 const result = await ryeClient.getProductsByDomainV2({
   input: {
-    domain: "hiutdenim.co.uk",
+    domain: 'hiutdenim.co.uk',
   },
   pagination: { limit: 3, offset: 2 },
 });
@@ -260,7 +256,7 @@ const result = await ryeClient.getProductsByDomainV2({
 
 ```ts
 const result = await ryeClient.getCart({
-  id: "<CART_ID>",
+  id: '<CART_ID>',
   fetchBuyerIdentity: false, // Set to true to fetch buyer identity
   fetchOffer: false, // Set to true to fetch offers for each store
   fetchCartLines: false, // Set to true to fetch cart lines
@@ -272,7 +268,7 @@ const result = await ryeClient.getCart({
 
 ```ts
 const result = await ryeClient.orderById({
-  id: "<ORDER_ID>",
+  id: '<ORDER_ID>',
 });
 ```
 
@@ -280,7 +276,7 @@ const result = await ryeClient.orderById({
 
 ```ts
 const result = await ryeClient.checkoutByCartId({
-  id: "<CART_ID>",
+  id: '<CART_ID>',
   fetchBuyerIdentity: false, // Set to true to fetch buyer identity
   fetchOffer: false, // Set to true to fetch offers for each store
   fetchCartLines: false, // Set to true to fetch cart lines
@@ -292,7 +288,7 @@ const result = await ryeClient.checkoutByCartId({
 
 ```ts
 const result = await ryeClient.getShopifyAppInformation({
-  storeCanonicalDomain: "dear-media-shop.myshopify.com",
+  storeCanonicalDomain: 'dear-media-shop.myshopify.com',
 });
 ```
 

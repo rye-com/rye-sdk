@@ -12,7 +12,7 @@ import {
   RequestProductByUrlInput,
   RequestStoreByUrlInput,
   UpdateCartSelectedShippingOptionsInput,
-} from "./graphql/graphql";
+} from './graphql/graphql';
 
 export type GetCartParams = {
   id: string;
