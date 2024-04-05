@@ -17,4 +17,6 @@ export const GRAPHQL_ENDPOINTS = {
   [ENVIRONMENT.LOCAL]: 'http://localhost:3000/v1/query',
 };
 
+export const RYE_SDK_VERSION = 'development';
+
 export const RYE_SHOPPER_IP = 'rye-shopper-ip';

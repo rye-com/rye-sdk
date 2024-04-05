@@ -13,6 +13,7 @@ import {
   ENVIRONMENT,
   GRAPHQL_ENDPOINTS,
   OPERATION,
+  RYE_SDK_VERSION,
   RYE_SHOPPER_IP,
 } from './constants';
 import { ADD_CART_ITEMS_MUTATION } from './gql/addCartItems';
@@ -214,6 +215,7 @@ class RyeClient implements IRyeClient {
           headers: {
             Authorization: this.authHeader!,
             [RYE_SHOPPER_IP]: this.shopperIp!,
+            'rye-user-agent': `Rye/v1 Node/${RYE_SDK_VERSION}`,
           },
         };
       },

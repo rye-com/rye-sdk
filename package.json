@@ -21,6 +21,7 @@
     "format": "prettier --write .",
     "lint": "eslint ./",
     "lint:fix": "eslint --fix ./",
+    "postbuild": "ts-node ./scripts/postbuild.ts",
     "test": "vitest run"
   },
   "devDependencies": {
@@ -34,6 +35,8 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "graphql": "^16.7.1",
     "prettier": "^3.2.5",
+    "ts-morph": "^22.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.1.6",
     "vitest": "^1.4.0"
   },
