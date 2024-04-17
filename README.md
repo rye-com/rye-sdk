@@ -10,6 +10,8 @@ Install the package with:
 npm install @rye-api/rye-sdk
 # or
 yarn add @rye-api/rye-sdk
+# or
+pnpm add @rye-api/rye-sdk
 ```
 
 ## Usage
@@ -20,10 +22,17 @@ The client needs to be created with your account's API authorization header and 
 
 ```ts
 // Production
-const ryeClient = new RyeClient('<AUTH_HEADER>', '<SHOPPER_IP>');
+const ryeClient = new RyeClient({
+  authHeader: '<AUTH_HEADER>',
+  shopperIp: '<SHOPPER_IP>',
+});
 
 // Staging
-const ryeClient = new RyeClient('<AUTH_HEADER>', '<SHOPPER_IP>', ENVIRONMENT.STAGING);
+const ryeClient = new RyeClient({
+  authHeader: '<AUTH_HEADER>',
+  shopperIp: '<SHOPPER_IP>',
+  environment: ENVIRONMENT.STAGING,
+});
 ```
 
 ### Mutations
@@ -304,4 +313,4 @@ const result = await ryeClient.getEnvironmentToken();
 - Rye Console: https://console.rye.com/
 - Tutorial: https://tutorial.rye.com/
 - Website: https://rye.com/
-- Contact us at: rye@dev.com
+- Contact us at: dev@rye.com

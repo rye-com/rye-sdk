@@ -7,7 +7,6 @@
     "url": "https://github.com/rye-com/rye-sdk"
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "license": "MIT",
