@@ -62,6 +62,7 @@ import type {
   CreateCartParams,
   DeleteCartItemsParams,
   GetCartParams,
+  ILogger,
   IntegratedShopifyStoreParams,
   OrderByIdParams,
   ProductByIdParams,
@@ -152,10 +153,12 @@ interface IRyeClient {
   ): Promise<ShopifyCollectionQuery['shopifyCollection'] | undefined>;
 }
 
+
 interface RyeClientOptions {
   authHeader: string;
   /** @default {ENVIRONMENT.PRODUCTION} */
   environment?: ENVIRONMENT;
+  logger?: ILogger;
   shopperIp: string;
 }
 
@@ -163,6 +166,7 @@ class RyeClient implements IRyeClient {
   private authHeader: string | null;
   private shopperIp: string | null;
   private environment: ENVIRONMENT;
+  private logger: ILogger;
   private ryeClient: Client;
 
   /**
@@ -179,11 +183,13 @@ class RyeClient implements IRyeClient {
       this.authHeader = options.authHeader;
       this.shopperIp = options.shopperIp;
       this.environment = options.environment || DEFAULT_ENVIRONMENT;
+      this.logger = options.logger || console;
     } else {
       const [authHeader, shopperIp, environment] = args;
       this.authHeader = authHeader;
       this.shopperIp = shopperIp;
       this.environment = environment || DEFAULT_ENVIRONMENT;
+      this.logger = console;
     }
 
     this.ryeClient = this.initializeClient();
@@ -239,15 +245,19 @@ class RyeClient implements IRyeClient {
     };
 
     try {
-      return await tryRequest();
-    } catch (e) {
-      console.error('Error requesting Rye API. ', {
+      const result = await tryRequest();
+      if (result.error) {
+        throw result.error;
+      }
+      return result;
+    } catch (error) {
+      this.logger.error('Error requesting Rye API. ', {
         query,
         variables,
         method,
-        error: e,
+        error,
       });
-      throw e;
+      throw error;
     }
   }
 

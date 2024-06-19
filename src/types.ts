@@ -14,6 +14,13 @@ import {
   UpdateCartSelectedShippingOptionsInput,
 } from './graphql/graphql';
 
+type LogFn = (message: string, meta?: unknown) => void;
+
+export interface ILogger {
+  error: LogFn;
+  log: LogFn;
+}
+
 export type GetCartParams = {
   id: string;
   fetchBuyerIdentity?: boolean;
