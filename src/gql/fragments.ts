@@ -172,6 +172,7 @@ export const Cart = graphql(`
       stores {
         ... on AmazonStore {
           isSubmitted
+          orderId
           requestId
           errors {
             code
@@ -189,6 +190,9 @@ export const Cart = graphql(`
           }
         }
         ... on ShopifyStore {
+          isSubmitted
+          orderId
+          requestId
           errors {
             code
             message
