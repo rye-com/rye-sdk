@@ -1,4 +1,3 @@
-import { retryExchange, type RetryExchangeOptions } from '@urql/exchange-retry';
 import {
   type AnyVariables,
   Client,
@@ -6,7 +5,8 @@ import {
   fetchExchange,
   type OperationResult,
   type OperationResultSource,
-} from 'urql';
+} from '@urql/core';
+import { retryExchange, type RetryExchangeOptions } from '@urql/exchange-retry';
 
 import {
   DEFAULT_ENVIRONMENT,
