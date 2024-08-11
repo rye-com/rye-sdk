@@ -197,6 +197,11 @@ class RyeClient implements IRyeClient {
     if (!this.authHeader || !this.shopperIp) {
       throw new Error('RyeClient requires an authHeader and shopperIp to be set.');
     }
+    if (typeof fetch !== 'function') {
+      throw new Error(
+        'RyeClient requires a global fetch function to be available. Try setting up `node-fetch`: https://www.npmjs.com/package/node-fetch#providing-global-access',
+      );
+    }
 
     warnIfAuthHeaderInvalid(this.authHeader);
 
@@ -235,6 +240,10 @@ class RyeClient implements IRyeClient {
     variables: TVariables,
     method: OPERATION = OPERATION.QUERY,
   ): Promise<OperationResultSource<OperationResult<TResult, TVariables>>> {
+    if (typeof fetch !== 'function') {
+      //
+    }
+
     const tryRequest = async () => {
       return await this.ryeClient[method](query, variables);
     };
