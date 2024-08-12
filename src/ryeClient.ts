@@ -240,10 +240,6 @@ class RyeClient implements IRyeClient {
     variables: TVariables,
     method: OPERATION = OPERATION.QUERY,
   ): Promise<OperationResultSource<OperationResult<TResult, TVariables>>> {
-    if (typeof fetch !== 'function') {
-      //
-    }
-
     const tryRequest = async () => {
       return await this.ryeClient[method](query, variables);
     };
