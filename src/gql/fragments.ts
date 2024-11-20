@@ -164,11 +164,37 @@ export const ShopifyCartLines = graphql(`
   }
 `);
 
+export const Price = graphql(`
+  fragment Price on Price {
+    currency
+    displayValue
+    value
+  }
+`);
+
 export const Cart = graphql(`
   fragment Cart on CartResponse {
     cart {
       id
       ...BuyerIdentity @include(if: $fetchBuyerIdentity)
+      cost {
+        isEstimated
+        margin {
+          ...Price
+        }
+        shipping {
+          ...Price
+        }
+        subtotal {
+          ...Price
+        }
+        tax {
+          ...Price
+        }
+        total {
+          ...Price
+        }
+      }
       stores {
         ... on AmazonStore {
           isSubmitted
