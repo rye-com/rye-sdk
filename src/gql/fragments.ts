@@ -251,11 +251,6 @@ export const ProductDetails = graphql(`
       currency
       displayValue
     }
-  }
-`);
-
-export const AdditionalProductDetails = graphql(`
-  fragment AdditionalProductDetails on Product {
     ... on AmazonProduct {
       ASIN
       titleExcludingVariantName
