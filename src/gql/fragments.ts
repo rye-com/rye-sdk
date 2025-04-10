@@ -251,6 +251,31 @@ export const ProductDetails = graphql(`
       currency
       displayValue
     }
+    variants {
+      id
+      image {
+        url
+      }
+      title
+
+      ... on AmazonVariant {
+        dimensions {
+          name
+          value
+        }
+        url
+      }
+      ... on ShopifyVariant {
+        isAvailable
+        isShippingRequired
+        name
+        priceV2 {
+          ...Price
+        }
+        quantityAvailable
+      }
+    }
+
     ... on AmazonProduct {
       ASIN
       titleExcludingVariantName

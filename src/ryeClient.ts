@@ -52,6 +52,7 @@ import {
   RequestStoreByUrlMutation,
   ShopifyAppQuery,
   ShopifyCollectionQuery,
+  ShopifyProduct,
   SubmitCartMutation,
   UpdateCartBuyerIdentityMutation,
   UpdateCartItemsMutation,
@@ -446,3 +447,16 @@ export class RyeClient {
     return response.data?.shopifyCollection;
   };
 }
+
+const client = new RyeClient();
+
+const product = await client.getProductById({
+  input: { id: '123231', marketplace: Marketplace.Shopify },
+});
+if (product?.__typename === 'ShopifyProduct') {
+  doSomethingWithAProduct(product);
+}
+
+async function doSomethingWithAProduct(
+  _product: Extract<ProductByIdQuery['productByID'], { __typename?: 'ShopifyProduct' }>,
+) {}
