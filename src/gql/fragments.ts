@@ -17,50 +17,24 @@ export const BuyerIdentity = graphql(`
   }
 `);
 
-export const AmazonShippingMethods = graphql(`
-  fragment AmazonShippingMethods on AmazonOffer {
-    shippingMethods {
-      id
-      label
-      price {
-        value
-        displayValue
-        currency
-      }
-      taxes {
-        value
-        displayValue
-        currency
-      }
-      total {
-        value
-        displayValue
-        currency
-      }
+export const ShippingMethod = graphql(`
+  fragment ShippingMethod on ShippingMethod {
+    id
+    label
+    price {
+      value
+      displayValue
+      currency
     }
-  }
-`);
-
-export const ShopifyShippingMethods = graphql(`
-  fragment ShopifyShippingMethods on ShopifyOffer {
-    shippingMethods {
-      id
-      label
-      price {
-        value
-        displayValue
-        currency
-      }
-      taxes {
-        value
-        displayValue
-        currency
-      }
-      total {
-        value
-        displayValue
-        currency
-      }
+    taxes {
+      value
+      displayValue
+      currency
+    }
+    total {
+      value
+      displayValue
+      currency
     }
   }
 `);
@@ -88,7 +62,9 @@ export const AmazonOffer = graphql(`
         currency
       }
       notAvailableIds
-      ...AmazonShippingMethods
+      shippingMethods {
+        ...ShippingMethod
+      }
     }
   }
 `);
@@ -116,7 +92,9 @@ export const ShopifyOffer = graphql(`
         currency
       }
       notAvailableIds
-      ...ShopifyShippingMethods
+      shippingMethods {
+        ...ShippingMethod
+      }
     }
   }
 `);
@@ -176,7 +154,11 @@ export const Cart = graphql(`
   fragment Cart on CartResponse {
     cart {
       id
-      ...BuyerIdentity @include(if: $fetchBuyerIdentity)
+      attributes {
+        key
+        value
+      }
+      ...BuyerIdentity
       cost {
         isEstimated
         margin {
@@ -205,14 +187,21 @@ export const Cart = graphql(`
             message
             details {
               productIds
+              reasons {
+                code
+                productId
+                reason
+              }
             }
           }
           store
-          ...AmazonCartLines @include(if: $fetchCartLines)
+          ...AmazonCartLines
           isShippingRequired
-          ...AmazonOffer @include(if: $fetchOffer)
+          ...AmazonOffer
           offer {
-            ...AmazonShippingMethods @include(if: $fetchShippingMethods)
+            shippingMethods {
+              ...ShippingMethod
+            }
           }
         }
         ... on ShopifyStore {
@@ -227,10 +216,12 @@ export const Cart = graphql(`
             }
           }
           store
-          ...ShopifyCartLines @include(if: $fetchCartLines)
-          ...ShopifyOffer @include(if: $fetchOffer)
+          ...ShopifyCartLines
+          ...ShopifyOffer
           offer {
-            ...ShopifyShippingMethods @include(if: $fetchShippingMethods)
+            shippingMethods {
+              ...ShippingMethod
+            }
           }
         }
       }
@@ -260,11 +251,31 @@ export const ProductDetails = graphql(`
       currency
       displayValue
     }
-  }
-`);
+    variants {
+      id
+      image {
+        url
+      }
+      title
 
-export const AdditionalProductDetails = graphql(`
-  fragment AdditionalProductDetails on Product {
+      ... on AmazonVariant {
+        dimensions {
+          name
+          value
+        }
+        url
+      }
+      ... on ShopifyVariant {
+        isAvailable
+        isShippingRequired
+        name
+        priceV2 {
+          ...Price
+        }
+        quantityAvailable
+      }
+    }
+
     ... on AmazonProduct {
       ASIN
       titleExcludingVariantName

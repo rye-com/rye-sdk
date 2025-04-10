@@ -43,6 +43,7 @@ import {
   EnvironmentTokenQuery,
   GetCartQuery,
   IntegratedShopifyStoreQuery,
+  Marketplace,
   OrderByIdQuery,
   ProductByIdQuery,
   ProductsByDomainV2Query,
@@ -51,6 +52,7 @@ import {
   RequestStoreByUrlMutation,
   ShopifyAppQuery,
   ShopifyCollectionQuery,
+  ShopifyProduct,
   SubmitCartMutation,
   UpdateCartBuyerIdentityMutation,
   UpdateCartItemsMutation,
@@ -78,113 +80,23 @@ import type {
 } from './types';
 import { warnIfAuthHeaderInvalid } from './utils';
 
-interface IRyeClient {
-  getCart(getCartParams: GetCartParams): Promise<GetCartQuery['getCart'] | undefined>;
-
-  createCart(
-    createCartParams: CreateCartParams,
-  ): Promise<CreateCartMutation['createCart'] | undefined>;
-
-  addCartItems(
-    addCartItemsParams: AddCartItemsParams,
-  ): Promise<AddCartItemsMutation['addCartItems'] | undefined>;
-
-  deleteCartItems(
-    deleteCartItemsParams: DeleteCartItemsParams,
-  ): Promise<DeleteCartItemsMutation['deleteCartItems'] | undefined>;
-
-  updateCartItems(
-    updateCartItemsParams: UpdateCartItemsParams,
-  ): Promise<UpdateCartItemsMutation['updateCartItems'] | undefined>;
-
-  removeCart(
-    removeCartItemsParams: RemoveCartParams,
-  ): Promise<RemoveCartMutation['removeCart'] | undefined>;
-
-  updateCartBuyerIdentity(
-    updateCartBuyerIdentityParams: UpdateCartBuyerIdentityParams,
-  ): Promise<UpdateCartBuyerIdentityMutation['updateCartBuyerIdentity'] | undefined>;
-
-  updateCartSelectedShippingOptions(
-    updateCartSelectedShippingOptionsParams: UpdateCartSelectedShippingOptionsParams,
-  ): Promise<
-    UpdateCartSelectedShippingOptionsMutation['updateCartSelectedShippingOptions'] | undefined
-  >;
-
-  submitCart(
-    submitCartParams: SubmitCartParams,
-  ): Promise<SubmitCartMutation['submitCart'] | undefined>;
-
-  orderById(orderByIdParams: OrderByIdParams): Promise<OrderByIdQuery['orderByID'] | undefined>;
-
-  checkoutByCartId(
-    checkoutByCartIdParams: CheckoutByCartIdParams,
-  ): Promise<CheckoutByCartIdQuery['checkoutByCartID'] | undefined>;
-
-  getEnvironmentToken(): Promise<EnvironmentTokenQuery['environmentToken'] | undefined>;
-
-  getShopifyAppInformation(
-    shopifyAppParams: ShopifyAppParams,
-  ): Promise<ShopifyAppQuery['shopifyApp'] | undefined>;
-
-  requestProductByUrl(
-    requestProductByUrlParams: RequestProductByUrlParams,
-  ): Promise<RequestProductByUrlMutation['requestProductByURL'] | undefined>;
-
-  requestStoreByUrl(
-    requestStoreByUrlParams: RequestStoreByUrlParams,
-  ): Promise<RequestStoreByUrlMutation['requestStoreByURL'] | undefined>;
-
-  getProductById(
-    productByIdParams: ProductByIdParams,
-  ): Promise<ProductByIdQuery['productByID'] | undefined>;
-
-  getProductsByDomainV2(
-    productsByDomainV2Params: ProductsByDomainV2Params,
-  ): Promise<ProductsByDomainV2Query['productsByDomainV2'] | undefined>;
-
-  getIntegratedShopifyStore(
-    integratedShopifyStoreParams: IntegratedShopifyStoreParams,
-  ): Promise<IntegratedShopifyStoreQuery['integratedShopifyStore'] | undefined>;
-
-  getShopifyCollection(
-    shopifyCollectionParams: ShopifyCollectionParams,
-  ): Promise<ShopifyCollectionQuery['shopifyCollection'] | undefined>;
-}
-
-interface RyeClientOptions {
+export interface RyeClientOptions {
   authHeader: string;
   /** @default {ENVIRONMENT.PRODUCTION} */
   environment?: ENVIRONMENT;
   shopperIp: string;
 }
 
-class RyeClient implements IRyeClient {
+export class RyeClient {
   private authHeader: string | null;
   private shopperIp: string | null;
   private environment: ENVIRONMENT;
   private ryeClient: Client;
 
-  /**
-   * @deprecated This signature is deprecated. Please use the alternate constructor signature that takes a {@link RyeClientOptions} bag.
-   */
-  constructor(authHeader: string, shopperIp: string, environment?: ENVIRONMENT);
-  constructor(options: RyeClientOptions);
-  constructor(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...args: any[]
-  ) {
-    if (args.length === 1) {
-      const options = args[0];
-      this.authHeader = options.authHeader;
-      this.shopperIp = options.shopperIp;
-      this.environment = options.environment || DEFAULT_ENVIRONMENT;
-    } else {
-      const [authHeader, shopperIp, environment] = args;
-      this.authHeader = authHeader;
-      this.shopperIp = shopperIp;
-      this.environment = environment || DEFAULT_ENVIRONMENT;
-    }
+  constructor(options: RyeClientOptions) {
+    this.authHeader = options.authHeader;
+    this.shopperIp = options.shopperIp;
+    this.environment = options.environment || DEFAULT_ENVIRONMENT;
 
     this.ryeClient = this.initializeClient();
   }
@@ -535,5 +447,3 @@ class RyeClient implements IRyeClient {
     return response.data?.shopifyCollection;
   };
 }
-
-export { RyeClient };
