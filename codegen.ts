@@ -11,7 +11,6 @@ const config: CodegenConfig = {
       config: {
         dedupeFragments: false,
         defaultScalarType: 'unknown',
-        enumsAsConst: true,
         scalars: {
           Percentage: 'number',
           Time: 'string',

@@ -40,7 +40,9 @@ export const CHECKOUT_BY_CART_ID_QUERY = graphql(`
             isShippingRequired
             ...AmazonOffer
             offer {
-              ...AmazonShippingMethods
+              shippingMethods {
+                ...ShippingMethod
+              }
             }
           }
           ... on ShopifyStore {
@@ -55,7 +57,9 @@ export const CHECKOUT_BY_CART_ID_QUERY = graphql(`
             ...ShopifyCartLines
             ...ShopifyOffer
             offer {
-              ...ShopifyShippingMethods
+              shippingMethods {
+                ...ShippingMethod
+              }
             }
           }
         }

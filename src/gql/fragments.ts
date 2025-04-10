@@ -17,50 +17,24 @@ export const BuyerIdentity = graphql(`
   }
 `);
 
-export const AmazonShippingMethods = graphql(`
-  fragment AmazonShippingMethods on AmazonOffer {
-    shippingMethods {
-      id
-      label
-      price {
-        value
-        displayValue
-        currency
-      }
-      taxes {
-        value
-        displayValue
-        currency
-      }
-      total {
-        value
-        displayValue
-        currency
-      }
+export const ShippingMethod = graphql(`
+  fragment ShippingMethod on ShippingMethod {
+    id
+    label
+    price {
+      value
+      displayValue
+      currency
     }
-  }
-`);
-
-export const ShopifyShippingMethods = graphql(`
-  fragment ShopifyShippingMethods on ShopifyOffer {
-    shippingMethods {
-      id
-      label
-      price {
-        value
-        displayValue
-        currency
-      }
-      taxes {
-        value
-        displayValue
-        currency
-      }
-      total {
-        value
-        displayValue
-        currency
-      }
+    taxes {
+      value
+      displayValue
+      currency
+    }
+    total {
+      value
+      displayValue
+      currency
     }
   }
 `);
@@ -88,7 +62,9 @@ export const AmazonOffer = graphql(`
         currency
       }
       notAvailableIds
-      ...AmazonShippingMethods
+      shippingMethods {
+        ...ShippingMethod
+      }
     }
   }
 `);
@@ -116,7 +92,9 @@ export const ShopifyOffer = graphql(`
         currency
       }
       notAvailableIds
-      ...ShopifyShippingMethods
+      shippingMethods {
+        ...ShippingMethod
+      }
     }
   }
 `);
@@ -176,6 +154,10 @@ export const Cart = graphql(`
   fragment Cart on CartResponse {
     cart {
       id
+      attributes {
+        key
+        value
+      }
       ...BuyerIdentity
       cost {
         isEstimated
@@ -205,6 +187,11 @@ export const Cart = graphql(`
             message
             details {
               productIds
+              reasons {
+                code
+                productId
+                reason
+              }
             }
           }
           store
@@ -212,7 +199,9 @@ export const Cart = graphql(`
           isShippingRequired
           ...AmazonOffer
           offer {
-            ...AmazonShippingMethods
+            shippingMethods {
+              ...ShippingMethod
+            }
           }
         }
         ... on ShopifyStore {
@@ -230,7 +219,9 @@ export const Cart = graphql(`
           ...ShopifyCartLines
           ...ShopifyOffer
           offer {
-            ...ShopifyShippingMethods
+            shippingMethods {
+              ...ShippingMethod
+            }
           }
         }
       }
