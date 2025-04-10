@@ -43,6 +43,7 @@ import {
   EnvironmentTokenQuery,
   GetCartQuery,
   IntegratedShopifyStoreQuery,
+  Marketplace,
   OrderByIdQuery,
   ProductByIdQuery,
   ProductsByDomainV2Query,
@@ -91,26 +92,10 @@ export class RyeClient {
   private environment: ENVIRONMENT;
   private ryeClient: Client;
 
-  /**
-   * @deprecated This signature is deprecated. Please use the alternate constructor signature that takes a {@link RyeClientOptions} bag.
-   */
-  constructor(authHeader: string, shopperIp: string, environment?: ENVIRONMENT);
-  constructor(options: RyeClientOptions);
-  constructor(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...args: any[]
-  ) {
-    if (args.length === 1) {
-      const options = args[0];
-      this.authHeader = options.authHeader;
-      this.shopperIp = options.shopperIp;
-      this.environment = options.environment || DEFAULT_ENVIRONMENT;
-    } else {
-      const [authHeader, shopperIp, environment] = args;
-      this.authHeader = authHeader;
-      this.shopperIp = shopperIp;
-      this.environment = environment || DEFAULT_ENVIRONMENT;
-    }
+  constructor(options: RyeClientOptions) {
+    this.authHeader = options.authHeader;
+    this.shopperIp = options.shopperIp;
+    this.environment = options.environment || DEFAULT_ENVIRONMENT;
 
     this.ryeClient = this.initializeClient();
   }
