@@ -99,10 +99,6 @@ const result = await ryeClient.createCart({
       ],
     },
   },
-  fetchBuyerIdentity: false, // Set to true to fetch buyer identity
-  fetchOffer: false, // Set to true to fetch offers for each store
-  fetchCartLines: false, // Set to true to fetch cart lines
-  fetchShippingMethods: false, // Set to true to fetch shipping methods
 });
 ```
 
@@ -178,9 +174,6 @@ const result = await ryeClient.updateCartBuyerIdentity({
       postalCode: '<POSTAL_CODE>',
     },
   },
-  fetchOffer: false, // Set to true to fetch offers for each store
-  fetchCartLines: false, // Set to true to fetch cart lines
-  fetchShippingMethods: false, // Set to true to fetch shipping methods
 });
 ```
 
@@ -197,10 +190,6 @@ const result = await ryeClient.updateCartSelectedShippingOptions({
       },
     ],
   },
-  fetchBuyerIdentity: false, // Set to true to fetch buyer identity
-  fetchOffer: false, // Set to true to fetch offers for each store
-  fetchCartLines: false, // Set to true to fetch cart lines
-  fetchShippingMethods: false, // Set to true to fetch shipping methods
 });
 ```
 
@@ -266,10 +255,6 @@ const result = await ryeClient.getProductsByDomainV2({
 ```ts
 const result = await ryeClient.getCart({
   id: '<CART_ID>',
-  fetchBuyerIdentity: false, // Set to true to fetch buyer identity
-  fetchOffer: false, // Set to true to fetch offers for each store
-  fetchCartLines: false, // Set to true to fetch cart lines
-  fetchShippingMethods: false, // Set to true to fetch shipping methods
 });
 ```
 
@@ -286,10 +271,6 @@ const result = await ryeClient.orderById({
 ```ts
 const result = await ryeClient.checkoutByCartId({
   id: '<CART_ID>',
-  fetchBuyerIdentity: false, // Set to true to fetch buyer identity
-  fetchOffer: false, // Set to true to fetch offers for each store
-  fetchCartLines: false, // Set to true to fetch cart lines
-  fetchShippingMethods: false, // Set to true to fetch shipping methods
 });
 ```
 
