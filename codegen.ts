@@ -7,11 +7,23 @@ const config: CodegenConfig = {
   generates: {
     './src/graphql/': {
       preset: 'client',
-      presetConfig: {
-        fragmentMasking: false,
+      presetConfig: { fragmentMasking: false },
+      config: {
+        dedupeFragments: false,
+        defaultScalarType: 'unknown',
+        enumsAsConst: true,
+        scalars: {
+          Percentage: 'number',
+          Time: 'string',
+          URL: 'string',
+        },
+        strictScalars: true,
+        useTypeImports: true,
       },
-      plugins: [],
     },
+  },
+  hooks: {
+    afterOneFileWrite: ['prettier --write'],
   },
 };
 
