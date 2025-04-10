@@ -1,13 +1,7 @@
 import { graphql } from '../graphql';
 
 export const CHECKOUT_BY_CART_ID_QUERY = graphql(`
-  query CheckoutByCartID(
-    $cartID: ID!
-    $fetchBuyerIdentity: Boolean = true
-    $fetchShippingMethods: Boolean = true
-    $fetchOffer: Boolean = true
-    $fetchCartLines: Boolean = true
-  ) {
+  query CheckoutByCartID($cartID: ID!) {
     checkoutByCartID(cartID: $cartID) {
       status
       orders {
@@ -29,7 +23,7 @@ export const CHECKOUT_BY_CART_ID_QUERY = graphql(`
       }
       cart {
         id
-        ...BuyerIdentity @include(if: $fetchBuyerIdentity)
+        ...BuyerIdentity
         stores {
           ... on AmazonStore {
             isSubmitted
@@ -42,11 +36,11 @@ export const CHECKOUT_BY_CART_ID_QUERY = graphql(`
               }
             }
             store
-            ...AmazonCartLines @include(if: $fetchCartLines)
+            ...AmazonCartLines
             isShippingRequired
-            ...AmazonOffer @include(if: $fetchOffer)
+            ...AmazonOffer
             offer {
-              ...AmazonShippingMethods @include(if: $fetchShippingMethods)
+              ...AmazonShippingMethods
             }
           }
           ... on ShopifyStore {
@@ -58,10 +52,10 @@ export const CHECKOUT_BY_CART_ID_QUERY = graphql(`
               }
             }
             store
-            ...ShopifyCartLines @include(if: $fetchCartLines)
-            ...ShopifyOffer @include(if: $fetchOffer)
+            ...ShopifyCartLines
+            ...ShopifyOffer
             offer {
-              ...ShopifyShippingMethods @include(if: $fetchShippingMethods)
+              ...ShopifyShippingMethods
             }
           }
         }

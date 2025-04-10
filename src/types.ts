@@ -16,42 +16,22 @@ import {
 
 export type GetCartParams = {
   id: string;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type CreateCartParams = {
   input: CartCreateInput;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type AddCartItemsParams = {
   input: CartItemsAddInput;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type DeleteCartItemsParams = {
   input: CartItemsDeleteInput;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type UpdateCartItemsParams = {
   input: CartItemsUpdateInput;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type RemoveCartParams = {
@@ -60,18 +40,10 @@ export type RemoveCartParams = {
 
 export type UpdateCartBuyerIdentityParams = {
   input: CartBuyerIdentityUpdateInput;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type UpdateCartSelectedShippingOptionsParams = {
   input: UpdateCartSelectedShippingOptionsInput;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type SubmitCartParams = {
@@ -84,10 +56,6 @@ export type OrderByIdParams = {
 
 export type CheckoutByCartIdParams = {
   cartID: string;
-  fetchBuyerIdentity?: boolean;
-  fetchShippingMethods?: boolean;
-  fetchOffer?: boolean;
-  fetchCartLines?: boolean;
 };
 
 export type ShopifyAppParams = {
@@ -104,13 +72,11 @@ export type RequestStoreByUrlParams = {
 
 export type ProductByIdParams = {
   input: ProductByIdInput;
-  includeAdditionalProductDetails: boolean;
 };
 
 export type ProductsByDomainV2Params = {
   input: ProductsByDomainInput;
   pagination: OffsetPaginationInput;
-  includeAdditionalProductDetails: boolean;
 };
 
 export type IntegratedShopifyStoreParams = {

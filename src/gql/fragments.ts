@@ -176,7 +176,7 @@ export const Cart = graphql(`
   fragment Cart on CartResponse {
     cart {
       id
-      ...BuyerIdentity @include(if: $fetchBuyerIdentity)
+      ...BuyerIdentity
       cost {
         isEstimated
         margin {
@@ -208,11 +208,11 @@ export const Cart = graphql(`
             }
           }
           store
-          ...AmazonCartLines @include(if: $fetchCartLines)
+          ...AmazonCartLines
           isShippingRequired
-          ...AmazonOffer @include(if: $fetchOffer)
+          ...AmazonOffer
           offer {
-            ...AmazonShippingMethods @include(if: $fetchShippingMethods)
+            ...AmazonShippingMethods
           }
         }
         ... on ShopifyStore {
@@ -227,10 +227,10 @@ export const Cart = graphql(`
             }
           }
           store
-          ...ShopifyCartLines @include(if: $fetchCartLines)
-          ...ShopifyOffer @include(if: $fetchOffer)
+          ...ShopifyCartLines
+          ...ShopifyOffer
           offer {
-            ...ShopifyShippingMethods @include(if: $fetchShippingMethods)
+            ...ShopifyShippingMethods
           }
         }
       }
