@@ -1,4 +1,7 @@
-# Rye SDK
+# Rye SDK - **DEPRECATED**
+
+**Note: This archive is still accessible as a reference for existing users, but it is deprecated and will not be updated any longer.
+Please review our [docs](https://docs.rye.com) for guidance on accessing our API directly.**
 
 The Rye SDK provides convenient access to the Rye API via the Rye client from which users can make queries and mutations easily.
 
